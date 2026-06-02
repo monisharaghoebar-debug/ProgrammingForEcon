@@ -5,8 +5,6 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
-no change
-
 # Set-up your environment
 
 ```{r package_install, include=FALSE}

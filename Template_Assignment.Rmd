@@ -24,10 +24,11 @@ require(WDI)
 # Title Page
 
 LE Vi Trang
+Raghoebar Monisha 
 Isabel Lust
 Ermias Gebremichael
 Pritish Dewan 
->>>>>>> Stashed changes
+
 Tutorial 6 Group 2
 
 Simon Loop

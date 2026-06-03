@@ -22,6 +22,7 @@ require(yaml)
 # Title Page
 
 LE Vi Trang
+Isabel Lust
 
 Tutorial 6 Group 2
 

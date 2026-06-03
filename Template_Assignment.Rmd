@@ -11,12 +11,14 @@ output: pdf_document
 install.packages("tidyverse")
 install.packages("yaml")
 install.packages("rmarkdown")
+install.packages("WDI")
 ```
 
 ```{r packages}
 require(tidyverse)
 require(rmarkdown)
 require(yaml)
+require(WDI)
 ```
 
 # Title Page
@@ -46,23 +48,7 @@ Include the following:
 Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
 
 ```{r loading_data}
-# WDI      -> World Bank Indicators API
-# eurostat -> Eurostat bulk-download / API
-pkgs <- c("WDI", "eurostat", "dplyr", "tidyr", "readr")
-to_install <- pkgs[!pkgs %in% rownames(installed.packages())]
-if (length(to_install)) install.packages(to_install)
-invisible(lapply(pkgs, library, character.only = TRUE))
- 
-# Reproducible output folder
-dir.create("data/raw", recursive = TRUE, showWarnings = FALSE)
-```
-```{r loading_data}
-# ============================================================
-# 1. WORLD BANK  (WDI package hits api.worldbank.org directly)
-# ============================================================
-# Named vector -> tidy columns 'total_unemp' and 'youth_unemp'.
-# extra = TRUE adds iso codes, region and income group, which lets us
-# separate real countries from World Bank aggregates (region == "Aggregates").
+
 wb_raw <- WDI(
   country   = "all",
   indicator = c(total_unemp = "SL.UEM.TOTL.ZS",

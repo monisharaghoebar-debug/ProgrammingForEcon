@@ -12,6 +12,7 @@ install.packages("tidyverse")
 install.packages("yaml")
 install.packages("rmarkdown")
 install.packages("WDI")
+install.packages("eurostat")
 ```
 
 ```{r packages}
@@ -19,6 +20,7 @@ require(tidyverse)
 require(rmarkdown)
 require(yaml)
 require(WDI)
+require(eurostat)
 ```
 
 # Title Page
@@ -63,45 +65,9 @@ wb_raw <- WDI(
   extra     = TRUE
 )
 
-# Keep individual countries only (drop WLD, regions, income groups).
-# If you want the World total for a context line, keep wb_raw instead.
-wb_countries <- wb_raw %>%
-  filter(region != "Aggregates") %>%
-  select(country, iso3c = iso3c, region, income, year,
-         total_unemp, youth_unemp) %>%
-  arrange(country, year)
-
-# ============================================================
-# 2. EUROSTAT  (eurostat package hits ec.europa.eu directly)
-# ============================================================
 # time_format = "num" gives a numeric year column.
 ai_raw <- get_eurostat("isoc_eb_ai", time_format = "num")
 
-# --- INSPECT the dimensions before filtering -------------------------------
-# Eurostat dimension CODES vary by dataset and change occasionally, so we
-# DISCOVER them at runtime rather than hard-coding values that may be wrong.
-dim_cols <- setdiff(names(ai_raw), c("values", "TIME_PERIOD", "time"))
-cat("\nEurostat isoc_eb_ai dimensions and their codes:\n")
-print(lapply(ai_raw[dim_cols], function(x) sort(unique(as.character(x)))))
-
-# Human-readable labels (handy for confirming which code means what)
-ai_labelled <- label_eurostat(ai_raw)
-
-# --- TEMPLATE filter --- VERIFY the codes against the printout above --------
-# Typical target: % of enterprises with 10+ employees using >=1 AI technology.
-# Common codes are below, but CONFIRM them in the inspection output and edit:
-#   size class column is often 'sizen_r2' with "GE10" = 10+ employees
-#   unit column is often 'unit' with "PC_ENT" = percentage of enterprises
-#   indicator column is often 'indic_is' (pick the "at least one AI tech" code)
-ai_clean <- ai_raw
-if ("sizen_r2" %in% names(ai_raw)) ai_clean <- filter(ai_clean, sizen_r2 == "GE10")
-if ("unit"     %in% names(ai_raw)) ai_clean <- filter(ai_clean, unit == "PC_ENT")
-# After confirming the indicator code, uncomment and set it, e.g.:
-# ai_clean <- filter(ai_clean, indic_is == "E_AI_TTAI")
-
-ai_clean <- ai_clean %>%
-  rename(year = TIME_PERIOD, ai_use_pct = values) %>%
-  arrange(geo, year)
 ```
 
 

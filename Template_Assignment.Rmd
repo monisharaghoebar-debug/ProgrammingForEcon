@@ -22,7 +22,12 @@ require(yaml)
 # Title Page
 
 LE Vi Trang
+<<<<<<< HEAD
 Monisha Raghoebar
+=======
+Isabel Lust
+
+>>>>>>> f4395787b089735f3eec63c5c8508313f4e8d7d5
 Tutorial 6 Group 2
 
 Simon Loop

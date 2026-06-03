@@ -170,7 +170,7 @@ Variable 2
 ```
 
 ## 3.3 Visualize temporal variation
-
+hi
 ```{r}
 
 ```

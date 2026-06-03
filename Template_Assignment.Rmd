@@ -29,7 +29,6 @@ LE Vi Trang
 Raghoebar Monisha 
 Isabel Lust
 Ermias Gebremichael
-Isabel Lust
 Pritish Dewan 
 
 Tutorial 6 Group 2
@@ -122,7 +121,7 @@ Variable 2
 ```
 
 ## 3.3 Visualize temporal variation
-
+hi
 ```{r}
 
 ```

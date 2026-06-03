@@ -23,9 +23,12 @@ require(yaml)
 
 LE Vi Trang
 <<<<<<< HEAD
-Monisha Raghoebar
+<<<<<<< HEAD
+Raghoebar Monisha 
 =======
 Isabel Lust
+=======
+>>>>>>> cb64260593aea0775fe08a18dc0377130e851533
 
 >>>>>>> f4395787b089735f3eec63c5c8508313f4e8d7d5
 Tutorial 6 Group 2
@@ -33,7 +36,7 @@ Tutorial 6 Group 2
 Simon Loop
 
 # Part 1 - Identify a Social Problem
-
+Ermias
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
 ## 1.1 Describe the Social Problem

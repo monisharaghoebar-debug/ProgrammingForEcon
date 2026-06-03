@@ -21,11 +21,9 @@ require(yaml)
 
 # Title Page
 
-Include your names
+LE Vi Trang
 
-Include the tutorial group number
-
-Include your tutorial lecturer's name
+Tutorial 6 Group 2
 
 Simon Loop
 

@@ -24,11 +24,8 @@ require(WDI)
 # Title Page
 
 LE Vi Trang
-<<<<<<< Updated upstream
-
-=======
-Ermias Gebremichael
 Isabel Lust
+Ermias Gebremichael
 Pritish Dewan 
 >>>>>>> Stashed changes
 Tutorial 6 Group 2

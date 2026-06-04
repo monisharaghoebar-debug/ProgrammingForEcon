@@ -55,18 +55,20 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 
 ```{r loading_data}
 
-wb_raw <- WDI(
-  country   = "all",
-  indicator = c(total_unemp = "SL.UEM.TOTL.ZS",
-                youth_unemp = "SL.UEM.1524.ZS"),
-  start     = 1991,            # WB modelled-ILO series effectively starts here
-  end       = 2024,
-  extra     = TRUE
-)
+#wb_raw <- WDI(
+ # country   = "all",
+ #indicator = c(total_unemp = "SL.UEM.TOTL.ZS",
+                #youth_unemp = "SL.UEM.1524.ZS"),
+#  start     = 1991,            # WB modelled-ILO series effectively starts here
+ # end       = 2024,
+  #extra     = TRUE
+#)
 
 # time_format = "num" gives a numeric year column.
-ai_raw <- get_eurostat("isoc_eb_ai", time_format = "num")
+#ai_raw <- get_eurostat("isoc_eb_ai", time_format = "num")
 
+#write_csv(ai_raw, "data/ai_raw.csv")
+#write_csv(wb_raw, "data/wb_raw.csv")
 ```
 
 

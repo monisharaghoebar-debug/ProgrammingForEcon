@@ -69,6 +69,13 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 
 #write_csv(ai_raw, "data/ai_raw.csv")
 #write_csv(wb_raw, "data/wb_raw.csv")
+
+#ai_raw<- read.csv("data/ai_raw.csv")
+#wb_raw<- read.csv("data/wb_raw.csv")
+
+
+
+
 ```
 
 

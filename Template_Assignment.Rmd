@@ -30,6 +30,9 @@ Raghoebar Monisha
 Isabel Lust
 Ermias Gebremichael
 Pritish Dewan
+Pritish Dewan 
+Noel Tripathi
+Caelin Rohiemon
 
 Tutorial 6 Group 2
 
@@ -50,9 +53,6 @@ Include the following:
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
-
-Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
-
 
 ```{r loading_data and retrieve only data of European countries}
 
@@ -120,7 +120,9 @@ Say we want to include only larger distances (above 2) in our dataset, we can fi
 
 wb_cleaned <- wb_raw %>%
   filter(year == 2021 | year == 2022 | year == 2023 | year == 2024)
-  
+
+ai_clean <- ai_raw %>%
+  filter(indic_is == "E_AI_TANY")
   
 
 

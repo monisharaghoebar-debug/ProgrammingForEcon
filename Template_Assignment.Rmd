@@ -53,9 +53,6 @@ Include the following:
 
 ## 2.1 Load in the data
 
-Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
-
-
 ```{r loading_data and retrieve only data of European countries}
 
 options(timeout = 600)

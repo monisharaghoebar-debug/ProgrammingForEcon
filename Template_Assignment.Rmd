@@ -29,7 +29,7 @@ LE Vi Trang
 Raghoebar Monisha 
 Isabel Lust
 Ermias Gebremichael
-Pritish Dewan 
+Pritish Dewan
 
 Tutorial 6 Group 2
 
@@ -137,6 +137,11 @@ Variable 1
 
 ```{r gen_var1}
 
+wb_cleaned <- wb_cleaned %>%
+  group_by(year) %>%
+  summarise(mean_total = mean(total_unemp),
+            mean_youth = mean(youth_unemp))
+
 ```
 
 Variable 2
@@ -148,7 +153,9 @@ Variable 2
 ## 3.3 Visualize temporal variation
 hi
 ```{r}
-
+ggplot(wb_cleaned, aes(x= year)) + 
+         geom_line(aes(y=mean_total), color = "red") +
+          geom_line(aes(y=mean_youth), color = "blue")
 ```
 
 ## 3.4 Visualize spatial variation

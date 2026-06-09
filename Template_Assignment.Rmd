@@ -170,6 +170,21 @@ names(wb_cleaned)
 
 ```
 
+
+Table with new variables
+
+```{r}
+combined %>%
+  group_by(ai_group) %>%
+  summarise(
+    n = n(),
+    mean_total_unemp = mean(total_unemp, na.rm = TRUE),
+    mean_youth_ratio = mean(youth_ratio, na.rm = TRUE)
+  )
+```
+
+
+
 ## 3.3 Visualize temporal variation
 <<<<<<< Updated upstream
 =======

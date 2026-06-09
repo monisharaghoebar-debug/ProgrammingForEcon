@@ -118,39 +118,30 @@ Say we want to include only larger distances (above 2) in our dataset, we can fi
 
 ```{r data_cleaning}
 
-wb_cleaned <- wb_raw %>%
+wb_clean <- wb_raw %>%
   filter(year == 2021 | year == 2022 | year == 2023 | year == 2024)
 
 ai_clean <- ai_raw %>%
   filter(indic_is == "E_AI_TANY")
   
 
-
-
-
-
 ```
 
-Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
+```{r}
+year_pick <- 2024
+cross <- wb_cleaned %>%
+  filter(year == year_pick) %>%
+  inner_join(filter(ai_clean, year == year_pick), by = "iso2c")
+```
+
 
 ## 3.2 Generate necessary variables
 
 Variable 1
 
-```{r}
+```{r gen_var1}
 wb_cleaned <- wb_cleaned %>%
   mutate(youth_ratio = youth_unemp / total_unemp)
-
-```
-
-
-```{r gen_var1}
-
-wb_cleaned <- wb_cleaned %>%
-  group_by(year) %>%
-  summarise(mean_total = mean(total_unemp),
-            mean_youth = mean(youth_unemp))
-
 ```
 
 Variable 2

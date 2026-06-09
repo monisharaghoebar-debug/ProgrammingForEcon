@@ -138,12 +138,9 @@ cross <- wb_cleaned %>%
 ## 3.2 Generate necessary variables
 
 Variable 1
-```{r}
 
-wb_cleaned <- wb_cleaned %>%
-  group_by(year) %>%
-  summarise(mean_total = mean(total_unemp),
-            mean_youth = mean(youth_unemp))
+
+```{r}
 
 ```
 

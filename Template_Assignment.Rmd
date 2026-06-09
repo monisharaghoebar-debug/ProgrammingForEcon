@@ -25,7 +25,11 @@ require(eurostat)
 
 # Title Page
 
+<<<<<<< Updated upstream
 LE Vi Trang Raghoebar Monisha Isabel Lust Ermias Gebremichael Pritish Dewan Pritish Dewan Noel Tripathi Caelin Rohiemon
+=======
+LE Vi Trang Raghoebar Monisha Isabel Lust Ermias Gebremichael Pritish Dewan Noel Tripathi Caelin Rohiemon
+>>>>>>> Stashed changes
 
 Tutorial 6 Group 2
 
@@ -95,7 +99,18 @@ Think of things like:
 
 - Do the variables contain health information or SES information?
 
+<<<<<<< Updated upstream
 - Have they been measured by interviewing individuals or is the data coming from administrative sources?
+=======
+|     | Col2 | Col3 | Col4 |
+|-----|------|------|------|
+|     |      |      |      |
+|     |      |      |      |
+|     |      |      |      |
+|     |      |      |      |
+
+: Table 1
+>>>>>>> Stashed changes
 
 Variables Description: AI Adoption & Unemployment Rate
   Health vs. SES Information:* No direct health data is included. Neither variable measures physical or mental health. However, both have indirect links: AI adoption can be filtered to analyze the healthcare sector (NACE Sector Q), and unemployment is widely used as a macro-determinant of population stress.  Yes, both are core socioeconomic status (SES) indicators.* AI adoption tracks firm-level SES (corporate wealth and resource scale), while the unemployment rate tracks national macro-SES (financial vulnerability and living standards).
@@ -157,6 +172,12 @@ mutate(ai_group = case_when(
 
 
 ## 3.3 Visualize temporal variation
+<<<<<<< Updated upstream
+=======
+
+hi
+
+>>>>>>> Stashed changes
 ```{r}
 ggplot(wb_cleaned, aes(x= year)) + 
          geom_line(aes(y=mean_total), color = "red") +

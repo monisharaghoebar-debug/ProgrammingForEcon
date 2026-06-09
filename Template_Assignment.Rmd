@@ -139,7 +139,8 @@ Variable 1
 
 ```{r gen_var1}
 
-
+wb_cleaned <- wb_cleaned %>%
+  mutate(youth_ratio = youth_unemp / total_unemp)
 
 ```
 

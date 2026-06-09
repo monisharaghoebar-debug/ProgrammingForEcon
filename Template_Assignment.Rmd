@@ -160,16 +160,15 @@ Variable 2
 ```{r gen_var2}
 
 combined <- wb_cleaned %>%
-  left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD"))
-summary(combined$values) 
-
-combined <- combined %>%
+  left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
 mutate(ai_group = case_when(
   values < 10 ~ "Low",
   values < 30 ~ "Medium",
   TRUE ~ "High"
 ))
+names(wb_cleaned)
 
+```
 
 ## 3.3 Visualize temporal variation
 <<<<<<< Updated upstream

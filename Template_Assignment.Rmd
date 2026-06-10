@@ -141,34 +141,28 @@ Please use a separate 'R block' of code for each type of cleaning. So, e.g. one 
 
 ## 3.2 Generate necessary variables
 
-Variable 1
-
-```{r}
-
-
-```
+Variable 1: Exposure gap between youth and the total population
 
 ```{r gen_var1}
 
-wb_cleaned <- wb_cleaned %>%
+wb_clean <- wb_clean %>%
   mutate(youth_ratio = youth_unemp / total_unemp)
 ```
 
-Variable 2
+Variable 2: AI intensity usage across EU countries
 
-```{r gen_var2}
+```{r gen_var2} 
 
-combined <- wb_cleaned %>%
+combined <- wb_clean %>%
   left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
 mutate(ai_group = case_when(
   values < 10 ~ "Low",
   values < 30 ~ "Medium",
   TRUE ~ "High"
 ))
-names(wb_cleaned)
+names(wb_clean)
 
 ```
-
 
 Table with new variables
 

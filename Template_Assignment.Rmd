@@ -144,7 +144,7 @@ Variable 1
 
 ```{r gen_var1}
 
-wb_cleaned <- wb_cleaned %>%
+wb_clean <- wb_clean %>%
   mutate(youth_ratio = youth_unemp / total_unemp)
 
 ```
@@ -153,14 +153,14 @@ Variable 2
 
 ```{r gen_var2}
 
-combined <- wb_cleaned %>%
-  left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
+combined <- wb_clean %>%
+  left_join(ai_clean, by = c("iso2c", "year")) %>%
 mutate(ai_group = case_when(
   values < 10 ~ "Low",
   values < 30 ~ "Medium",
   TRUE ~ "High"
 ))
-names(wb_cleaned)
+names(wb_clean)
 
 ```
 
@@ -173,6 +173,7 @@ combined %>%
   summarise(
     n = n(),
     mean_total_unemp = mean(total_unemp, na.rm = TRUE),
+    mean_youth_unemp = mean(youth_unemp, na.rm = TRUE),
     mean_youth_ratio = mean(youth_ratio, na.rm = TRUE)
   )
 ```
@@ -182,10 +183,24 @@ combined %>%
 ## 3.3 Visualize temporal variation
 
 ```{r}
-ggplot(wb_cleaned, aes(x= year)) + 
-         geom_line(aes(y=mean_total), color = "red") +
-          geom_line(aes(y=mean_youth), color = "blue")
+# Average unemployment rate per year
+yearly <- wb_clean %>%
+  group_by(year) %>%
+  summarise(
+    mean_total_unemp = mean(total_unemp, na.rm = TRUE),
+    mean_youth_unemp = mean(youth_unemp, na.rm = TRUE)
+  )
+
+# Plotting the average unemployment rate per year
+ggplot(yearly, aes(x = year)) +
+  geom_line(aes(y = mean_total_unemp, color = "Total")) +
+  geom_line(aes(y = mean_youth_unemp, color = "Youth (15-24)")) +
+  labs(title = "EU unemployment over time: youth vs total",
+       x = "Year", y = "Unemployment (% of labour force)",
+       color = "Group") +
+  theme_minimal()
 ```
+
 ai_group - bins the continuous values into Low, Medium, and High, so we can compare youth unemployment outcomes across different levels of AI adotion.
 
 ## 3.4 Visualize spatial variation

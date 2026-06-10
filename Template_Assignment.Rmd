@@ -25,14 +25,8 @@ require(eurostat)
 
 # Title Page
 
-LE Vi Trang
-Raghoebar Monisha 
-Isabel Lust
-Ermias Gebremichael
-Pritish Dewan
-Pritish Dewan 
-Noel Tripathi
-Caelin Rohiemon
+
+LE Vi Trang Raghoebar Monisha Isabel Lust Ermias Gebremichael Pritish Dewan Pritish Dewan Noel Tripathi Caelin Rohiemon
 
 Tutorial 6 Group 2
 
@@ -46,9 +40,9 @@ Use APA referencing throughout your document. [Here's a link to some explanation
 
 Include the following:
 
--   Why is this relevant?
+- Why is this relevant?
 
--   ...
+- ...
 
 # Part 2 - Data Sourcing
 
@@ -81,7 +75,6 @@ if (file.exists("wb_raw.rds")) {
 }
 ```
 
-
 ## 2.2 Provide a short summary of the dataset(s)
 
 ```{r}
@@ -97,17 +90,30 @@ names(wb_raw)
 
 ```
 
-
-
-
 ## 2.3 Describe the type of variables included
 
 Think of things like:
 
--   Do the variables contain health information or SES information?
+- Do the variables contain health information or SES information?
 
--   Have they been measured by interviewing individuals or is the data coming from administrative sources?
+- Have they been measured by interviewing individuals or is the data coming from administrative sources?
 
+|     | Col2 | Col3 | Col4 |
+|-----|------|------|------|
+|     |      |      |      |
+|     |      |      |      |
+|     |      |      |      |
+|     |      |      |      |
+
+: Table 1
+
+Variables Description: AI Adoption & Unemployment Rate
+  Health vs. SES Information:* No direct health data is included. Neither variable measures physical or mental health. However, both have indirect links: AI adoption can be filtered to analyze the healthcare sector (NACE Sector Q), and unemployment is widely used as a macro-determinant of population stress.  Yes, both are core socioeconomic status (SES) indicators.* AI adoption tracks firm-level SES (corporate wealth and resource scale), while the unemployment rate tracks national macro-SES (financial vulnerability and living standards).
+  
+ Data Source (Survey vs. Administrative): Both variables are entirely survey-driven.Neither comes from automated government registries. The AI data is self-reported by company representatives via corporate ICT surveys. The unemployment data consists of modeled ILO estimates compiled from national household Labor Force Surveys. Both rely on sampling and self-reporting rather than institutional registers.
+ 
+ Geographic & Temporal Scope: The dataset is strictly limited to European countries over the annual timeline of 2021 to 2025. This specific window captures the exact intersection of the post-COVID labor market recovery and the rapid corporate adoption boom following the launch of generative AI.
+ 
 *For the sake of this example, I will continue with the assignment...*
 
 # Part 3 - Quantifying
@@ -118,45 +124,74 @@ Say we want to include only larger distances (above 2) in our dataset, we can fi
 
 ```{r data_cleaning}
 
-wb_clean <- wb_raw %>%
+wb_cleaned <- wb_raw %>%
   filter(year == 2021 | year == 2022 | year == 2023 | year == 2024)
 
 ai_clean <- ai_raw %>%
   filter(indic_is == "E_AI_TANY")
   
 
+
+
+
+
 ```
 
-```{r}
-year_pick <- 2024
-cross <- wb_cleaned %>%
-  filter(year == year_pick) %>%
-  inner_join(filter(ai_clean, year == year_pick), by = "iso2c")
-```
-
+Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
 
 ## 3.2 Generate necessary variables
 
 Variable 1
 
-
 ```{r}
 
+
+```
+
+```{r gen_var1}
+
+wb_cleaned <- wb_cleaned %>%
+  mutate(youth_ratio = youth_unemp / total_unemp)
 ```
 
 Variable 2
 
 ```{r gen_var2}
 
+combined <- wb_cleaned %>%
+  left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
+mutate(ai_group = case_when(
+  values < 10 ~ "Low",
+  values < 30 ~ "Medium",
+  TRUE ~ "High"
+))
+names(wb_cleaned)
+
 ```
 
+
+Table with new variables
+
+```{r}
+combined %>%
+  group_by(ai_group) %>%
+  summarise(
+    n = n(),
+    mean_total_unemp = mean(total_unemp, na.rm = TRUE),
+    mean_youth_ratio = mean(youth_ratio, na.rm = TRUE)
+  )
+```
+
+
+
 ## 3.3 Visualize temporal variation
-hi
+
 ```{r}
 ggplot(wb_cleaned, aes(x= year)) + 
          geom_line(aes(y=mean_total), color = "red") +
           geom_line(aes(y=mean_youth), color = "blue")
 ```
+ai_group - bins the continuous values into Low, Medium, and High, so we can compare youth unemployment outcomes across different levels of AI adotion.
 
 ## 3.4 Visualize spatial variation
 

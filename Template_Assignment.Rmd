@@ -171,7 +171,18 @@ ai_group - bins the continuous values into Low, Medium, and High, so we can comp
 ## 3.4 Visualize spatial variation
 
 ```{r visualise_map}
-
+ggplot ("eu countries", aes(x=ai_intensity, 
+                            y= youth_unemployment,
+                            size= total_unemployment,
+                            label=country)) +
+  geom_point(alpha=0.7) + 
+  geom_text_repel(size=3)+
+  scale_size_continuous(name="total unemployment (%)") +
+  
+  labs(x="AI intensity", 
+       y="youth unemployment(%)", 
+       title= "AI intensity and unemployment in EU countries") + theme_minimal()
+                 
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.

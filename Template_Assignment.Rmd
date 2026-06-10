@@ -163,6 +163,10 @@ mutate(ai_group = case_when(
 names(wb_clean)
 
 ```
+```{r table for ai_intensity}
+
+
+```
 
 
 Table with new variables
@@ -207,9 +211,9 @@ ai_group - bins the continuous values into Low, Medium, and High, so we can comp
 
 ```{r visualise_map}
 
-ggplot (merged, aes(x=ai_intensity, 
-                    y= youth_unemployment,
-                    size= total_unemployment,
+ggplot (merged, aes(x=ai_group, 
+                    y= youth_unemp,
+                    size= total_unemp,
                     label=country)) +
   geom_point(alpha=0.7, color = "stealblue") + 
   geom_text_repel(size=3, max.overlaps= 20)+

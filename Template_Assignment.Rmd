@@ -22,10 +22,10 @@ require(rmarkdown)
 require(yaml)
 require(WDI)
 require(eurostat)
+require(ggrepel)
 ```
 
 # Title Page
-
 
 LE Vi Trang Raghoebar Monisha Isabel Lust Ermias Gebremichael Pritish Dewan Pritish Dewan Noel Tripathi Caelin Rohiemon
 
@@ -99,21 +99,9 @@ Think of things like:
 
 - Have they been measured by interviewing individuals or is the data coming from administrative sources?
 
-|     | Col2 | Col3 | Col4 |
-|-----|------|------|------|
-|     |      |      |      |
-|     |      |      |      |
-|     |      |      |      |
-|     |      |      |      |
-
-: Table 1
-
-Variables Description: AI Adoption & Unemployment Rate
-  Health vs. SES Information:* No direct health data is included. Neither variable measures physical or mental health. However, both have indirect links: AI adoption can be filtered to analyze the healthcare sector (NACE Sector Q), and unemployment is widely used as a macro-determinant of population stress.  Yes, both are core socioeconomic status (SES) indicators.* AI adoption tracks firm-level SES (corporate wealth and resource scale), while the unemployment rate tracks national macro-SES (financial vulnerability and living standards).
-  
- Data Source (Survey vs. Administrative): Both variables are entirely survey-driven.Neither comes from automated government registries. The AI data is self-reported by company representatives via corporate ICT surveys. The unemployment data consists of modeled ILO estimates compiled from national household Labor Force Surveys. Both rely on sampling and self-reporting rather than institutional registers.
- 
- Geographic & Temporal Scope: The dataset is strictly limited to European countries over the annual timeline of 2021 to 2025. This specific window captures the exact intersection of the post-COVID labor market recovery and the rapid corporate adoption boom following the launch of generative AI.
+The AI data comes from Eurostats that shows business wealth and resources . The unemployment data comes from World Bankdata that shows the financial trouble and living standards .the two main variables are  Total unemployment rate and youth unemploymentent. the youth unemployment is used as the sub-population to see how young workers are affected by AI data usage in businesses.
+Where: European countries only.
+When: Years 2021 to 2025 ( but 2022 not included). This timeline captures the exact period where the post-pandemic labor market met the massive generative AI boom.
  
 *For the sake of this example, I will continue with the assignment...*
 
@@ -154,15 +142,11 @@ Please use a separate 'R block' of code for each type of cleaning. So, e.g. one 
 
 Variable 1
 
-```{r}
-
-
-```
-
 ```{r gen_var1}
 
 wb_cleaned <- wb_cleaned %>%
   mutate(youth_ratio = youth_unemp / total_unemp)
+
 ```
 
 Variable 2
@@ -207,7 +191,6 @@ ai_group - bins the continuous values into Low, Medium, and High, so we can comp
 ## 3.4 Visualize spatial variation
 
 ```{r visualise_map}
-library("ggrepel")
 
 ggplot (merged, aes(x=ai_intensity, 
                     y= youth_unemployment,

@@ -211,7 +211,11 @@ ai_group - bins the continuous values into Low, Medium, and High, so we can comp
 
 ```{r visualise_map}
 
-ggplot (merged, aes(x=ai_group, 
+ai_group <- combined %>%
+   filter(year == 2024, !is.na(ai_group)) %>%
+  mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High")))
+
+ggplot (ai_group, aes(x=ai_group, 
                     y= youth_unemp,
                     size= total_unemp,
                     label=country)) +

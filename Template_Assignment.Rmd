@@ -25,8 +25,11 @@ require(eurostat)
 
 # Title Page
 
-
+<<<<<<< Updated upstream
 LE Vi Trang Raghoebar Monisha Isabel Lust Ermias Gebremichael Pritish Dewan Pritish Dewan Noel Tripathi Caelin Rohiemon
+=======
+LE Vi Trang Raghoebar Monisha Isabel Lust Ermias Gebremichael Pritish Dewan Noel Tripathi Caelin Rohiemon
+>>>>>>> Stashed changes
 
 Tutorial 6 Group 2
 
@@ -96,23 +99,17 @@ Think of things like:
 
 - Do the variables contain health information or SES information?
 
+<<<<<<< Updated upstream
 - Have they been measured by interviewing individuals or is the data coming from administrative sources?
 
-|     | Col2 | Col3 | Col4 |
-|-----|------|------|------|
-|     |      |      |      |
-|     |      |      |      |
-|     |      |      |      |
-|     |      |      |      |
+The AI data comes from Eurostats that shows business wealth and resources . The unemployment data comes from World Bankdata that shows the financial trouble and living standards .the two main variables are  Total unemployment rate and youth unemploymentent. the youth unemployment is used as the sub-population to see how young workers are affected by AI data usage in businesses.
+Where: European countries only.
+When: Years 2021 to 2025 ( but 2022 not included). This timeline captures the exact period where the post-pandemic labor market met the massive generative AI boom.
 
-: Table 1
+=======
 
-Variables Description: AI Adoption & Unemployment Rate
-  Health vs. SES Information:* No direct health data is included. Neither variable measures physical or mental health. However, both have indirect links: AI adoption can be filtered to analyze the healthcare sector (NACE Sector Q), and unemployment is widely used as a macro-determinant of population stress.  Yes, both are core socioeconomic status (SES) indicators.* AI adoption tracks firm-level SES (corporate wealth and resource scale), while the unemployment rate tracks national macro-SES (financial vulnerability and living standards).
-  
- Data Source (Survey vs. Administrative): Both variables are entirely survey-driven.Neither comes from automated government registries. The AI data is self-reported by company representatives via corporate ICT surveys. The unemployment data consists of modeled ILO estimates compiled from national household Labor Force Surveys. Both rely on sampling and self-reporting rather than institutional registers.
+>>>>>>> Stashed changes
  
- Geographic & Temporal Scope: The dataset is strictly limited to European countries over the annual timeline of 2021 to 2025. This specific window captures the exact intersection of the post-COVID labor market recovery and the rapid corporate adoption boom following the launch of generative AI.
  
 *For the sake of this example, I will continue with the assignment...*
 
@@ -141,28 +138,30 @@ Please use a separate 'R block' of code for each type of cleaning. So, e.g. one 
 
 ## 3.2 Generate necessary variables
 
-Variable 1: Exposure gap between youth and the total population
+Variable 1
 
 ```{r gen_var1}
 
-wb_clean <- wb_clean %>%
+wb_cleaned <- wb_cleaned %>%
   mutate(youth_ratio = youth_unemp / total_unemp)
+
 ```
 
-Variable 2: AI intensity usage across EU countries
+Variable 2
 
-```{r gen_var2} 
+```{r gen_var2}
 
-combined <- wb_clean %>%
+combined <- wb_cleaned %>%
   left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
 mutate(ai_group = case_when(
   values < 10 ~ "Low",
   values < 30 ~ "Medium",
   TRUE ~ "High"
 ))
-names(wb_clean)
+names(wb_cleaned)
 
 ```
+
 
 Table with new variables
 
@@ -172,69 +171,38 @@ combined %>%
   summarise(
     n = n(),
     mean_total_unemp = mean(total_unemp, na.rm = TRUE),
-    mean_youth_unemp = mean(youth_unemp, na.rm = TRUE),
     mean_youth_ratio = mean(youth_ratio, na.rm = TRUE)
   )
 ```
 
+
+
 ## 3.3 Visualize temporal variation
+<<<<<<< Updated upstream
+=======
+
+
+
+>>>>>>> Stashed changes
 ```{r}
-# 1. Average unemployment rate per year
-yearly <- wb_clean %>%
-  group_by(year) %>%
-  summarise(
-    mean_total_unemp = mean(total_unemp, na.rm = TRUE),
-    mean_youth_unemp = mean(youth_unemp, na.rm = TRUE)
-  )
-
-# 2. Plot the 'yearly' table
-ggplot(yearly, aes(x = year)) +
-  geom_line(aes(y = mean_total_unemp, color = "Total")) +
-  geom_line(aes(y = mean_youth_unemp, color = "Youth (15-24)")) +
-  labs(title = "EU unemployment over time: youth vs total",
-       x = "Year", y = "Unemployment (% of labour force)",
-       color = "Group") +
-  theme_minimal()
+ggplot(wb_cleaned, aes(x= year)) + 
+         geom_line(aes(y=mean_total), color = "red") +
+          geom_line(aes(y=mean_youth), color = "blue")
 ```
-
-
 ai_group - bins the continuous values into Low, Medium, and High, so we can compare youth unemployment outcomes across different levels of AI adotion.
 
 ## 3.4 Visualize spatial variation
 
 ```{r visualise_map}
-ggplot ("eu countries", aes(x=ai_intensity, 
-                            y= youth_unemployment,
-                            size= total_unemployment,
-                            label=country)) +
-  geom_point(alpha=0.7) + 
-  geom_text_repel(size=3)+
-  scale_size_continuous(name="total unemployment (%)") +
-  
-  labs(x="AI intensity", 
-       y="youth unemployment(%)", 
-       title= "AI intensity and unemployment in EU countries") + theme_minimal()
-                 
+
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
 
 ## 3.5 Visualize sub-population variation
 
-Youth unemployment in high- vs low-AI-adoption countries (2024).
+What is the poverty rate by state?
 
-```{r visualise_subpopulations}
-combined %>%
-  filter(year == 2024, !is.na(ai_group)) %>%
-  mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High"))) %>%
-  ggplot(aes(x = ai_group, y = youth_unemp)) +
-  geom_boxplot(na.rm = TRUE, fill = "violet", color = "navy", outlier.color = "darkorange1", varwidth = TRUE) +
-  labs(title = "Youth unemployment by level of AI adoption (2024)",
-       x = "AI adoption group", y = "Youth unemployment (%)") +
-  theme_minimal()
-```
-
-Template:
 ```{r visualise_subpopulations}
 dataset$inmetro <- dataset$inmetro %>% as.factor()
 # Boxplot of poverty rate by state using the 'midwest' dataset

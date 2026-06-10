@@ -13,6 +13,7 @@ install.packages("yaml")
 install.packages("rmarkdown")
 install.packages("WDI")
 install.packages("eurostat")
+install.packages("ggrepel")
 ```
 
 ```{r packages}
@@ -124,14 +125,24 @@ Say we want to include only larger distances (above 2) in our dataset, we can fi
 
 ```{r data_cleaning}
 
-wb_cleaned <- wb_raw %>%
+wb_clean <- wb_raw %>%
   filter(year == 2021 | year == 2022 | year == 2023 | year == 2024)
 
 ai_clean <- ai_raw %>%
   filter(indic_is == "E_AI_TANY")
   
+colnames(ai_clean)
+colnames(wb_clean)
+
+ai_clean <- ai_clean %>%
+  rename(
+    year = 'TIME_PERIOD',
+    iso2c = 'geo'
+  )
 
 
+merged <- inner_join(ai_clean, wb_clean, by = c("iso2c", "year"))
+relationship = "many-to-many"
 
 
 
@@ -196,12 +207,14 @@ ai_group - bins the continuous values into Low, Medium, and High, so we can comp
 ## 3.4 Visualize spatial variation
 
 ```{r visualise_map}
-ggplot ("eu countries", aes(x=ai_intensity, 
-                            y= youth_unemployment,
-                            size= total_unemployment,
-                            label=country)) +
-  geom_point(alpha=0.7) + 
-  geom_text_repel(size=3)+
+library("ggrepel")
+
+ggplot (merged, aes(x=ai_intensity, 
+                    y= youth_unemployment,
+                    size= total_unemployment,
+                    label=country)) +
+  geom_point(alpha=0.7, color = "stealblue") + 
+  geom_text_repel(size=3, max.overlaps= 20)+
   scale_size_continuous(name="total unemployment (%)") +
   
   labs(x="AI intensity", 

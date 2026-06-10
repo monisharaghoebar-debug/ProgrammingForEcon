@@ -221,8 +221,20 @@ Here you provide a description of why the plot above is relevant to your specifi
 
 ## 3.5 Visualize sub-population variation
 
-What is the poverty rate by state?
+Youth unemployment in high- vs low-AI-adoption countries (2024).
 
+```{r visualise_subpopulations}
+combined %>%
+  filter(year == 2024, !is.na(ai_group)) %>%
+  mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High"))) %>%
+  ggplot(aes(x = ai_group, y = youth_unemp)) +
+  geom_boxplot(na.rm = TRUE, fill = "violet", color = "navy", outlier.color = "darkorange1", varwidth = TRUE) +
+  labs(title = "Youth unemployment by level of AI adoption (2024)",
+       x = "AI adoption group", y = "Youth unemployment (%)") +
+  theme_minimal()
+```
+
+Template:
 ```{r visualise_subpopulations}
 dataset$inmetro <- dataset$inmetro %>% as.factor()
 # Boxplot of poverty rate by state using the 'midwest' dataset

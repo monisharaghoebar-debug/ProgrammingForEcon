@@ -204,6 +204,7 @@ Here you provide a description of why the plot above is relevant to your specifi
 What is the poverty rate by state?
 
 ```{r visualise_subpopulations}
+<<<<<<< Updated upstream
 dataset$inmetro <- dataset$inmetro %>% as.factor()
 # Boxplot of poverty rate by state using the 'midwest' dataset
 ggplot(dataset, aes(x = inmetro, y = percadultpoverty)) +
@@ -218,8 +219,19 @@ ggplot(dataset, aes(x = inmetro, y = percadultpoverty)) +
     legend.position = "right"
   )
 ```
+=======
+combined %>%
+  filter(year == 2024, !is.na(ai_group)) %>%
+  mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High"))) %>%
+  ggplot(aes(x = ai_group, y = youth_unemp)) +
+  geom_boxplot(na.rm = TRUE, fill = "antiquewhite", color = "navy", outlier.color = "aquamarine", varwidth = TRUE) +
+  labs(title = "Youth unemployment by level of AI adoption (2024)",
+       x = "AI adoption group", y = "Youth unemployment (%)") +
+  theme_minimal()
+```
 
-Here you provide a description of why the plot above is relevant to your specific social problem.
+>>>>>>> Stashed changes
+
 
 ## 3.6 Event analysis
 

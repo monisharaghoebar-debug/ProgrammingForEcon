@@ -235,10 +235,25 @@ Here you provide a description of why the plot above is relevant to your specifi
 Analyze the relationship between two variables.
 
 ```{r analysis}
+ratio_by_year <- combined %>%
+  group_by(year) %>%
+  summarize(
+    mean_youth_ratio = mean(youth_ratio, na.rm = TRUE)
+  )
+ratio_by_year
 
+#Plotting the youth-to-total unemployment ratio per year 
+ggplot(ratio_by_year, aes (x = year, y = mean_youth_ratio)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2022, linetype = "dashed", color = "red") +
+  annotate("text", x = 2022.1, y = 2.8, label = "ChatGPT launch", hjust = 0, color = "red") +
+    labs(title = "Youth-to-total unemployment ratio in EU countries (2021-2024)",
+         x = "Year",
+         y = "Youth-to-total unemployment ratio") +
+    theme_minimal()
 ```
-
-Here you provide a description of why the plot above is relevant to your specific social problem.
+The graph shows the average youth-to-total unemployment ratio across EU countries from 2021 to 2024. The ratio rises steadily after 2022 - the year ChatGPT launched - suggesting that young workers may be increasingly disadvantaged relative to the broader workforce as AI adoption grows. However, this is an association, not proof: other factors such as post-COVID labor market shifts or broader economic conditions could equally explain the trend.
 
 # Part 4 - Discussion
 

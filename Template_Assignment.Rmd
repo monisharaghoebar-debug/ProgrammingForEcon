@@ -36,9 +36,27 @@ Simon Loop
 
 # Part 1 - Identify a Social Problem
 
+
+
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
 ## 1.1 Describe the Social Problem
+
+Artificial Intelligence (AI) is changing the way how firms hire workers, manage and organise work and use technology which has led to an increasingly important social and economic issue. With recent developments in generative AI, especially after the release of Chatgpt, in Novemeber of 2022. AI tools are more visible and widely used across different industries. It is argued that AI in the workplace increase productivity but it also may reduce demand of some type of labour, especially in entry level jobs (Cazzaniga et., 2024). 
+
+This becomes increasingly relevant for young workers aged 18-24. As workers in this age group, often have low to nil level of work experience and are very likely to work in temporary, entry level jobs. Therefore, this results in these workers being vulnurable when employers change the skills that they demand or when certain tasks can be fulfilled by AI. Youth Employement is therefore a social problem, because unemployement in early stages of their career/life can negatively affect future earnings,skill development and work experience which is required for future higher skilled jobs (International Labour Organisation, 2024). 
+
+This project examines whether the rise of national AI-Development capcity is linked and associated with worse labour outcomes for young workers compared with the total labour force. We compare data from countries from the year 2021-2025. The aim is whether there is an observable association between AI adoption and youth unemployement relative to overall unemployement. 
+
+Cazzaniga, M., Jaumotte, F., Li, L., Melina, G., Panton, A. J., Pizzinelli, C., Rockall, E. J., Tavares, M. M., & Yao, K. (2024)
+
+
+
+*Gen-AI: Artificial intelligence and the future of work*. International Monetary Fund. https://www.imf.org/en/Publications/Staff-Discussion-Notes/Issues/2024/01/14/Gen-AI-Artificial-Intelligence-and-the-Future-of-Work-542379
+
+
+International Labour Organization. (2024). *Global employment trends for youth 2024*. International Labour Organization. https://www.ilo.org/publications/major-publications/global-employment-trends-youth-2024
+
 
 Include the following:
 

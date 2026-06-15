@@ -13,6 +13,7 @@ install.packages("yaml")
 install.packages("rmarkdown")
 install.packages("WDI")
 install.packages("eurostat")
+install.packages("ggrepel")
 ```
 
 ```{r packages}
@@ -21,26 +22,25 @@ require(rmarkdown)
 require(yaml)
 require(WDI)
 require(eurostat)
+require(ggrepel)
 ```
 
 # Title Page
 
-<<<<<<< Updated upstream
-LE Vi Trang Raghoebar Monisha Isabel Lust Ermias Gebremichael Pritish Dewan Pritish Dewan Noel Tripathi Caelin Rohiemon
-=======
-LE Vi Trang Raghoebar Monisha Isabel Lust Ermias Gebremichael Pritish Dewan Noel Tripathi Caelin Rohiemon
->>>>>>> Stashed changes
-
+LE Vi Trang 
+Raghoebar Monisha 
+Isabel Lust 
+Ermias Gebremichael 
+Pritish Dewan 
+Noel Tripathi 
+Caelin Rohiemon
 
 Tutorial 6 Group 2
-
-Simon Loop
-
 # Part 1 - Identify a Social Problem
 
 
 
-Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
+Use APA referencing throughout your document. [https://www.mendeley.com/guides/apa-citation-guide/]
 
 ## 1.1 Describe the Social Problem
 
@@ -118,22 +118,13 @@ Think of things like:
 
 - Do the variables contain health information or SES information?
 
-<<<<<<< Updated upstream
 - Have they been measured by interviewing individuals or is the data coming from administrative sources?
 
 The AI data comes from Eurostats that shows business wealth and resources . The unemployment data comes from World Bankdata that shows the financial trouble and living standards .the two main variables are  Total unemployment rate and youth unemploymentent. the youth unemployment is used as the sub-population to see how young workers are affected by AI data usage in businesses.
 Where: European countries only.
 When: Years 2021 to 2025 ( but 2022 not included). This timeline captures the exact period where the post-pandemic labor market met the massive generative AI boom.
-<<<<<<< Updated upstream
-=======
 
-=======
-
->>>>>>> Stashed changes
- 
- 
 *For the sake of this example, I will continue with the assignment...*
->>>>>>> Stashed changes
 
 # Part 3 - Quantifying
 
@@ -143,19 +134,11 @@ Say we want to include only larger distances (above 2) in our dataset, we can fi
 
 ```{r data_cleaning}
 
-wb_cleaned <- wb_raw %>%
+wb_clean <- wb_raw %>%
   filter(year == 2021 | year == 2022 | year == 2023 | year == 2024)
 
 ai_clean <- ai_raw %>%
   filter(indic_is == "E_AI_TANY")
-  
-<<<<<<< Updated upstream
-=======
-
-
-
-
->>>>>>> Stashed changes
 
 ```
 
@@ -167,7 +150,7 @@ Variable 1
 
 ```{r gen_var1}
 
-wb_cleaned <- wb_cleaned %>%
+wb_clean <- wb_clean %>%
   mutate(youth_ratio = youth_unemp / total_unemp)
 
 ```
@@ -175,35 +158,17 @@ wb_cleaned <- wb_cleaned %>%
 Variable 2
 
 ```{r gen_var2}
-
-<<<<<<< Updated upstream
 combined <- wb_clean %>%
-=======
-combined <- wb_cleaned %>%
->>>>>>> Stashed changes
   left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
-mutate(ai_group = case_when(
-  values < 10 ~ "Low",
-  values < 30 ~ "Medium",
-  TRUE ~ "High"
-))
-<<<<<<< HEAD
-names(wb_clean)
-
+  mutate(ai_group = case_when(
+    values < 10 ~ "Low",
+    values < 30 ~ "Medium",
+    TRUE        ~ "High"
+  ))
 ```
-<<<<<<< Updated upstream
-=======
-=======
-names(wb_cleaned)
-
-```
->>>>>>> Stashed changes
-
->>>>>>> 803be7339e7448133311b0708fd03799f78c06d4
 
 Table with new variables
-
-```{r}
+```{r table}
 combined %>%
   group_by(ai_group) %>%
   summarise(
@@ -214,27 +179,30 @@ combined %>%
 ```
 
 
-
 ## 3.3 Visualize temporal variation
-<<<<<<< Updated upstream
-=======
+```{r temporal_variation}
+yearly <- wb_clean %>%
+  group_by(year) %>%
+  summarise(
+    mean_total_unemp = mean(total_unemp, na.rm = TRUE),
+    mean_youth_unemp = mean(youth_unemp, na.rm = TRUE)
+  )
 
-
-
->>>>>>> Stashed changes
-```{r}
-ggplot(wb_cleaned, aes(x= year)) + 
-         geom_line(aes(y=mean_total), color = "red") +
-          geom_line(aes(y=mean_youth), color = "blue")
+ggplot(yearly, aes(x = year)) +
+  geom_line(aes(y = mean_total_unemp, color = "Total")) +
+  geom_line(aes(y = mean_youth_unemp, color = "Youth (15-24)")) +
+  labs(title = "EU unemployment over time: youth vs total",
+       x = "Year",
+       y = "Unemployment (% of labour force)",
+       color = "Group") +
+  theme_minimal()
 ```
 ai_group - bins the continuous values into Low, Medium, and High, so we can compare youth unemployment outcomes across different levels of AI adotion.
-
 
 ## 3.4 Visualize spatial variation
 
 ```{r visualise map}
 
-<<<<<<< Updated upstream
 ai_group <- combined %>%
    filter(year == 2024, !is.na(ai_group)) %>%
   mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High")))
@@ -251,8 +219,6 @@ ggplot (combined, aes(x=ai_group,
        y="youth unemployment(%)", 
        title= "AI intensity and unemployment in EU countries") + theme_minimal()
 
-=======
->>>>>>> Stashed changes
 ```
 
 
@@ -261,7 +227,6 @@ ggplot (combined, aes(x=ai_group,
 What is the poverty rate by state?
 
 ```{r visualise_subpopulations}
-<<<<<<< Updated upstream
 combined %>%
   filter(year == 2024, !is.na(ai_group)) %>%
   mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High"))) %>%
@@ -270,25 +235,12 @@ combined %>%
   labs(title = "Youth unemployment by level of AI adoption (2024)",
        x = "AI adoption group", y = "Youth unemployment (%)") +
   theme_minimal()
-
-=======
-dataset$inmetro <- dataset$inmetro %>% as.factor()
-# Boxplot of poverty rate by state using the 'midwest' dataset
-ggplot(dataset, aes(x = inmetro, y = percadultpoverty)) +
-  geom_boxplot() +
-  labs(
-    title = "Distribution of Poverty Rates by Metropolitan status (Midwest counties)",
-    x = "Metropolitan Area",
-    y = "Poverty Rate of Adults (%)"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "right"
-  )
->>>>>>> Stashed changes
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
+
+
+
 
 ## 3.6 Event analysis
 

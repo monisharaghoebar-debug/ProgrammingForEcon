@@ -13,6 +13,11 @@ install.packages("yaml")
 install.packages("rmarkdown")
 install.packages("WDI")
 install.packages("eurostat")
+<<<<<<< Updated upstream
+=======
+install.packages("ggrepel")
+install.packages("tinytex")
+>>>>>>> Stashed changes
 ```
 
 ```{r packages}
@@ -225,7 +230,6 @@ ai_group - bins the continuous values into Low, Medium, and High, so we can comp
 
 ```{r visualise map}
 
-<<<<<<< Updated upstream
 ai_group <- combined %>%
    filter(year == 2024, !is.na(ai_group)) %>%
   mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High")))
@@ -242,8 +246,6 @@ ggplot (combined, aes(x=ai_group,
        y="youth unemployment(%)", 
        title= "AI intensity and unemployment in EU countries") + theme_minimal()
 
-=======
->>>>>>> Stashed changes
 ```
 
 

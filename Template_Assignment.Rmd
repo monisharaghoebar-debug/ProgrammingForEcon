@@ -13,7 +13,15 @@ install.packages("yaml")
 install.packages("rmarkdown")
 install.packages("WDI")
 install.packages("eurostat")
+<<<<<<< HEAD
 install.packages("ggrepel")
+=======
+<<<<<<< Updated upstream
+=======
+install.packages("ggrepel")
+install.packages("tinytex")
+>>>>>>> Stashed changes
+>>>>>>> 2d55b14af9fa261148268f603bac4c2b994fc17e
 ```
 
 ```{r packages}
@@ -139,7 +147,11 @@ wb_clean <- wb_raw %>%
 
 ai_clean <- ai_raw %>%
   filter(indic_is == "E_AI_TANY")
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 2d55b14af9fa261148268f603bac4c2b994fc17e
 ```
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
@@ -158,7 +170,15 @@ wb_clean <- wb_clean %>%
 Variable 2
 
 ```{r gen_var2}
+<<<<<<< HEAD
 combined <- wb_clean %>%
+=======
+
+combined <- wb_clean %>%
+
+combined <- wb_cleaned %>%
+>>>>>>> Stashed changes
+>>>>>>> 2d55b14af9fa261148268f603bac4c2b994fc17e
   left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
   mutate(ai_group = case_when(
     values < 10 ~ "Low",

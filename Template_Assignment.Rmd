@@ -281,3 +281,8 @@ Provide the link to your PUBLIC repository here: ...
 ## 5.2 Reference list
 
 Use APA referencing throughout your document.
+
+(2026). Europa.eu. https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ain2/default/table?lang=en
+
+
+‌

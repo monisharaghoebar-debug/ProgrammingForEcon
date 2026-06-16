@@ -51,14 +51,6 @@ This becomes increasingly relevant for young workers aged 18-24. As workers in t
 
 This project examines whether the rise of national AI-Development capcity is linked and associated with worse labour outcomes for young workers compared with the total labour force. We compare data from countries from the year 2021-2025. The aim is whether there is an observable association between AI adoption and youth unemployement relative to overall unemployement. 
 
-Cazzaniga, M., Jaumotte, F., Li, L., Melina, G., Panton, A. J., Pizzinelli, C., Rockall, E. J., Tavares, M. M., & Yao, K. (2024)
-
-
-
-*Gen-AI: Artificial intelligence and the future of work*. International Monetary Fund. https://www.imf.org/en/Publications/Staff-Discussion-Notes/Issues/2024/01/14/Gen-AI-Artificial-Intelligence-and-the-Future-of-Work-542379
-
-
-International Labour Organization. (2024). *Global employment trends for youth 2024*. International Labour Organization. https://www.ilo.org/publications/major-publications/global-employment-trends-youth-2024
 
 
 Include the following:
@@ -282,7 +274,15 @@ Provide the link to your PUBLIC repository here: ...
 
 Use APA referencing throughout your document.
 
+Cazzaniga, M., Jaumotte, F., Li, L., Melina, G., Panton, A. J., Pizzinelli, C., Rockall, E. J., Tavares, M. M., & Yao, K. (2024)
+
+World Bank Open Data. (n.d.). World Bank Open Data. https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS
+
 (2026). Europa.eu. https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ain2/default/table?lang=en
+
+Global Employment Trends for Youth 2024. (2026, May 21). International Labour Organization. https://www.ilo.org/publications/major-publications/global-employment-trends-youth-2024
+
+
 
 
 ‌

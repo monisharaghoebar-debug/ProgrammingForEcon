@@ -9,7 +9,10 @@ Pritish Dewan (2892767),
 Noel Tripathi (2871659),
 Caelin Rohiemon (2823797)"
 date: "`r Sys.Date()`"
-output: pdf_document
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
 ---
 
 ```{r package_install, include=FALSE}

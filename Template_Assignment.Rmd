@@ -143,7 +143,7 @@ ai_clean <- ai_raw %>%
 Variable 1: AI adoption rate, or AI usage intensity
 
 ```{r gen_var1, include=FALSE}
-combined <- wb_cleaned %>%
+combined <- wb_clean %>%
   left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
   mutate(ai_group = case_when(
     values < 10 ~ "Low",

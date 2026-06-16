@@ -52,8 +52,8 @@ This project examines whether the rise of national AI-Development capacity is li
 ## 2.1 Load in the data
 
 The data was compiled from the following two datasets of the World Bank Data:
-- Unemployment, youth total (% of total labor force ages 15-24) (modeled ILO estimate)
-- Unemployment, total (% of total labor force) (modeled ILO estimate)
+- Unemployment, youth total (% of total labor force ages 15-24) (modeled ILO estimate).
+- Unemployment, total (% of total labor force) (modeled ILO estimate).
 
 ```{r loading_data and retrieve only data of European countries, include=FALSE}
 

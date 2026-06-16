@@ -17,7 +17,7 @@ install.packages("ggrepel")
 install.packages("tinytex")
 ```
 
-```{r packages}
+```{r packages, include=FALSE}
 require(tidyverse)
 require(rmarkdown)
 require(yaml)
@@ -28,7 +28,7 @@ require(ggrepel)
 
 # Title Page
 
-LE Vi Trang 
+Vi Trang Le
 Raghoebar Monisha 
 Isabel Lust 
 Ermias Gebremichael 
@@ -39,20 +39,15 @@ Caelin Rohiemon
 Tutorial 6 Group 2
 # Part 1 - Identify a Social Problem
 
-
-
-Use APA referencing throughout your document. [https://www.mendeley.com/guides/apa-citation-guide/]
-
 ## 1.1 Describe the Social Problem
 
-Artificial Intelligence (AI) is changing the way how firms hire workers, manage and organise work and use technology which has led to an increasingly important social and economic issue. With recent developments in generative AI, especially after the release of Chatgpt, in Novemeber of 2022. AI tools are more visible and widely used across different industries. It is argued that AI in the workplace increase productivity but it also may reduce demand of some type of labour, especially in entry level jobs (Cazzaniga et al ., 2024). 
+Artificial Intelligence (AI) is changing the way how firms hire workers, manage and organise work and use technology which has led to an increasingly important social and economic issue. With recent developments in generative AI, especially after the release of Chatgpt, in Novemeber of 2022, AI tools are more visible and widely used across different industries. It is argued that AI in the workplace increases productivity but it also may reduce demand of some type of labour, especially in entry level jobs (Cazzaniga et al ., 2024). 
 
-This becomes increasingly relevant for young workers aged 18-24. As workers in this age group, often have low to nil level of work experience and are very likely to work in temporary, entry level jobs. Therefore, this results in these workers being vulnurable when employers change the skills that they demand or when certain tasks can be fulfilled by AI. Youth Employement is therefore a social problem, because unemployement in early stages of their career/life can negatively affect future earnings,skill development and work experience which is required for future higher skilled jobs (International Labour Organisation, 2024). 
+This becomes increasingly relevant for young workers aged 18-24. As workers in this age group, often have low to nil level of work experience and are very likely to work in temporary, entry level jobs. Therefore, this results in these workers being vulnerable when employers change the skills that they demand or when certain tasks can be fulfilled by AI. Youth Employment is therefore a social problem, because unemployment in early stages of their career/life can negatively affect future earnings, skill development and work experience which is required for higher skilled jobs (International Labour Organisation, 2024). 
 
-This project examines whether the rise of national AI-Development capcity is linked and associated with worse labour outcomes for young workers compared with the total labour force. We compare data from countries from the year 2021-2025. The aim is whether there is an observable association between AI adoption and youth unemployement relative to overall unemployement. 
+This project examines whether the rise of national AI-Development capacity is linked and associated with worse labour outcomes for young workers compared to the total labour force. We compare data from countries from the years 2021-2025. The aim is whether there is an observable association between AI adoption and youth unemployment relative to overall unemployment. 
 
 Cazzaniga, M., Jaumotte, F., Li, L., Melina, G., Panton, A. J., Pizzinelli, C., Rockall, E. J., Tavares, M. M., & Yao, K. (2024)
-
 
 
 *Gen-AI: Artificial intelligence and the future of work*. International Monetary Fund. https://www.imf.org/en/Publications/Staff-Discussion-Notes/Issues/2024/01/14/Gen-AI-Artificial-Intelligence-and-the-Future-of-Work-542379
@@ -61,17 +56,15 @@ Cazzaniga, M., Jaumotte, F., Li, L., Melina, G., Panton, A. J., Pizzinelli, C., 
 International Labour Organization. (2024). *Global employment trends for youth 2024*. International Labour Organization. https://www.ilo.org/publications/major-publications/global-employment-trends-youth-2024
 
 
-Include the following:
-
-- Why is this relevant?
-
-- ...
-
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
 
-```{r loading_data and retrieve only data of European countries}
+The data was compiled from the following two datasets of the World Bank Data:
+- Unemployment, youth total (% of total labor force ages 15-24) (modeled ILO estimate)
+- Unemployment, total (% of total labor force) (modeled ILO estimate)
+
+```{r loading_data and retrieve only data of European countries, include=FALSE}
 
 options(timeout = 600)
 # Eurostat 
@@ -100,7 +93,7 @@ if (file.exists("wb_raw.rds")) {
 
 ## 2.2 Provide a short summary of the dataset(s)
 
-```{r}
+```{r, include=FALSE}
 head(ai_raw) 
 str(ai_raw)
 summary(ai_raw)
@@ -115,50 +108,41 @@ names(wb_raw)
 
 ## 2.3 Describe the type of variables included
 
-Think of things like:
-
-- Do the variables contain health information or SES information?
-
-- Have they been measured by interviewing individuals or is the data coming from administrative sources?
-
-The AI data comes from Eurostats that shows business wealth and resources . The unemployment data comes from World Bankdata that shows the financial trouble and living standards .the two main variables are  Total unemployment rate and youth unemploymentent. the youth unemployment is used as the sub-population to see how young workers are affected by AI data usage in businesses.
+The AI data comes from Eurostats that shows business wealth and resources. The unemployment data comes from World Bankdata that shows the financial trouble and living standards. The two main variables are Total unemployment rate and youth unemployment. the youth unemployment is used as the sub-population to see how young workers are affected by AI data usage in businesses.
 Where: European countries only.
 When: Years 2021 to 2025 ( but 2022 not included). This timeline captures the exact period where the post-pandemic labor market met the massive generative AI boom.
 
-*For the sake of this example, I will continue with the assignment...*
+*Unemployment rate - World Bank* 
+Two indicators are used in this report: total unemployment
+(`SL.UEM.TOTL.ZS`) and youth unemployment, ages 15–24 (`SL.UEM.1524.ZS`). Both are expressed as a percentage of the labour force. Coverage of the raw data is worldwide and annual, during 1991–2024. 
+
+*AI use in enterprises - Eurostat* 
+Out of all indicators provided in (`isoc_eb_ai`), we selected the percentage of enterprises with 10 or more employees that use at least one AI technology including speech recognition, machine learning, etc. (`E_AI_TANY`)
+The dataset covers mainly data of EU countries for the years 2021, 2023, 2024 and 2025, prompting the need to extract only the unemployment rate of youths and the total population in EU countries from the World Bank datasets. 
 
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
 
-Say we want to include only larger distances (above 2) in our dataset, we can filter for this.
-
-```{r data_cleaning}
+As we have chosen to focus on the years 2021-2024 for better comparison of the impact of AI before and after the launch of ChatGPT in 2022, we need to filter data of unemployment within this period (OpenAI, 2022). 
+```{r data_cleaning, include=FALSE}
 
 wb_clean <- wb_raw %>%
   filter(year == 2021 | year == 2022 | year == 2023 | year == 2024)
-
-ai_clean <- ai_raw %>%
-  filter(indic_is == "E_AI_TANY")
-
 ```
 
-Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
+Out of many dimensions available in the raw data source, we filtered for number of enterprises using at least one of the AI technologies. 
+```{r data_cleaning_2, include=FALSE}
+ai_clean <- ai_raw %>%
+  filter(indic_is == "E_AI_TANY")
+```
+
 
 ## 3.2 Generate necessary variables
 
-Variable 1
+Variable 1: AI adoption rate, or AI usage intensity
 
-```{r gen_var1}
-
-wb_clean <- wb_clean %>%
-  mutate(youth_ratio = youth_unemp / total_unemp)
-
-```
-
-Variable 2
-
-```{r gen_var2}
+```{r gen_var1, include=FALSE}
 combined <- wb_cleaned %>%
   left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
   mutate(ai_group = case_when(
@@ -168,8 +152,18 @@ combined <- wb_cleaned %>%
   ))
 ```
 
+Variable 2: 
+
+```{r gen_var2, include=FALSE}
+
+wb_clean <- wb_clean %>%
+  mutate(youth_ratio = youth_unemp / total_unemp)
+
+```
+
+
 Table with new variables
-```{r table}
+```{r table, include=FALSE}
 combined %>%
   group_by(ai_group) %>%
   summarise(
@@ -181,7 +175,7 @@ combined %>%
 
 
 ## 3.3 Visualize temporal variation
-```{r temporal_variation}
+```{r temporal_variation, include=FALSE}
 yearly <- wb_clean %>%
   group_by(year) %>%
   summarise(
@@ -198,11 +192,12 @@ ggplot(yearly, aes(x = year)) +
        color = "Group") +
   theme_minimal()
 ```
-ai_group - bins the continuous values into Low, Medium, and High, so we can compare youth unemployment outcomes across different levels of AI adotion.
+
+ai_group - bins the continuous values into Low, Medium, and High, so we can compare youth unemployment outcomes across different levels of AI adoption.
 
 ## 3.4 Visualize spatial variation
 
-```{r visualise map}
+```{r visualise map, include=FALSE}
 
 ai_group <- combined %>%
    filter(year == 2024, !is.na(ai_group)) %>%
@@ -225,9 +220,8 @@ ggplot (combined, aes(x=ai_group,
 
 ## 3.5 Visualize sub-population variation
 
-What is the poverty rate by state?
 
-```{r visualise_subpopulations}
+```{r visualise_subpopulations, include=FALSE}
 combined %>%
   filter(year == 2024, !is.na(ai_group)) %>%
   mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High"))) %>%
@@ -247,7 +241,7 @@ Here you provide a description of why the plot above is relevant to your specifi
 
 Analyze the relationship between two variables.
 
-```{r analysis}
+```{r analysis, include=FALSE}
 ratio_by_year <- combined %>%
   group_by(year) %>%
   summarize(
@@ -280,4 +274,5 @@ Provide the link to your PUBLIC repository here: ...
 
 ## 5.2 Reference list
 
-Use APA referencing throughout your document.
+Introducing chatgpt. (2022). OpenAI. Retrieved June 16, 2026, from https://openai.com/index/chatgpt/
+

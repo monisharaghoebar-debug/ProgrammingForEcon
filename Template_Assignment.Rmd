@@ -1,18 +1,19 @@
 ---
 title: "To what extent is the rate of adoption of AI at the workplace associated with the increase in the unemployment rate? A comparison of youth and the total labour force"
-author: "Tutorial 6 Group 2
-Vi Trang Le (2895396),
-Monisha Raghoebar (2875885), 
-Isabel Lust (tbu),
-Ermias Gebremichael (2825682),
-Pritish Dewan (2892767), 
-Noel Tripathi (2871659),
-Caelin Rohiemon (2823797)"
+author: Vi Trang Le ('2895396') Monisha Raghoebar ('2875885') 
+ Isabel Lust (tbu)
+ Ermias Gebremichael ('2825682')
+ Pritish Dewan ('2892767')
+ Noel Tripathi ('2871659')
+ Caelin Rohiemon ('2823797')"
 date: "`r Sys.Date()`"
 output:
   pdf_document:
     toc: true
     toc_depth: 2
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r package_install, include=FALSE}
@@ -34,26 +35,44 @@ require(eurostat)
 require(ggrepel)
 ```
 
-# Table of Contents
-(tbu) 
-
 # Part 1 - Identify a Social Problem
 
 ## 1.1 Describe the Social Problem
 
-Artificial Intelligence (AI) is changing the way how firms hire workers, manage and organise work and use technology which has led to an increasingly important social and economic issue. With recent developments in generative AI, especially after the release of Chatgpt, in Novemeber of 2022, AI tools are more visible and widely used across different industries. It is argued that AI in the workplace increases productivity but it also may reduce demand of some type of labour, especially in entry level jobs (Cazzaniga et al ., 2024). 
+Artificial Intelligence (AI) is changing the way how firms hire workers,
+manage and organise work and use technology which has led to an
+increasingly important social and economic issue. With recent
+developments in generative AI, especially after the release of Chatgpt,
+in Novemeber of 2022, AI tools are more visible and widely used across
+different industries. It is argued that AI in the workplace increases
+productivity but it also may reduce demand of some type of labour,
+especially in entry level jobs (Cazzaniga et al ., 2024).
 
-This becomes increasingly relevant for young workers aged 18-24. As workers in this age group, often have low to nil level of work experience and are very likely to work in temporary, entry level jobs. Therefore, this results in these workers being vulnerable when employers change the skills that they demand or when certain tasks can be fulfilled by AI. Youth Employment is therefore a social problem, because unemployment in early stages of their career/life can negatively affect future earnings, skill development and work experience which is required for higher skilled jobs (International Labour Organisation, 2024). 
+This becomes increasingly relevant for young workers aged 18-24. As
+workers in this age group, often have low to nil level of work
+experience and are very likely to work in temporary, entry level jobs.
+Therefore, this results in these workers being vulnerable when employers
+change the skills that they demand or when certain tasks can be
+fulfilled by AI. Youth Employment is therefore a social problem, because
+unemployment in early stages of their career/life can negatively affect
+future earnings, skill development and work experience which is required
+for higher skilled jobs (International Labour Organisation, 2024).
 
-This project examines whether the rise of national AI-Development capacity is linked and associated with worse labour outcomes for young workers compared to the total labour force. We compare data from countries from the years 2021-2025. The aim is whether there is an observable association between AI adoption and youth unemployment relative to overall unemployment. 
+This project examines whether the rise of national AI-Development
+capacity is linked and associated with worse labour outcomes for young
+workers compared to the total labour force. We compare data from
+countries from the years 2021-2025. The aim is whether there is an
+observable association between AI adoption and youth unemployment
+relative to overall unemployment.
 
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
 
-The data was compiled from the following two datasets of the World Bank Data:
-- Unemployment, youth total (% of total labor force ages 15-24) (modeled ILO estimate).
-- Unemployment, total (% of total labor force) (modeled ILO estimate).
+The data was compiled from the following two datasets of the World Bank
+Data: - Unemployment, youth total (% of total labor force ages 15-24)
+(modeled ILO estimate). - Unemployment, total (% of total labor force)
+(modeled ILO estimate).
 
 ```{r loading_data and retrieve only data of European countries, include=FALSE}
 
@@ -99,35 +118,51 @@ names(wb_raw)
 
 ## 2.3 Describe the type of variables included
 
-The AI data comes from Eurostats that shows business wealth and resources. The unemployment data comes from World Bankdata that shows the financial trouble and living standards. The two main variables are Total unemployment rate and youth unemployment. the youth unemployment is used as the sub-population to see how young workers are affected by AI data usage in businesses.
-Where: European countries only.
-When: Years 2021 to 2025 ( but 2022 not included). This timeline captures the exact period where the post-pandemic labor market met the massive generative AI boom.
+The AI data comes from Eurostats that shows business wealth and
+resources. The unemployment data comes from World Bankdata that shows
+the financial trouble and living standards. The two main variables are
+Total unemployment rate and youth unemployment. the youth unemployment
+is used as the sub-population to see how young workers are affected by
+AI data usage in businesses. Where: European countries only. When: Years
+2021 to 2025 ( but 2022 not included). This timeline captures the exact
+period where the post-pandemic labor market met the massive generative
+AI boom.
 
-*Unemployment rate - World Bank* 
-Two indicators are used in this report: total unemployment
-(`SL.UEM.TOTL.ZS`) and youth unemployment, ages 15–24 (`SL.UEM.1524.ZS`). Both are expressed as a percentage of the labour force. Coverage of the raw data is worldwide and annual, during 1991–2024. 
+*Unemployment rate - World Bank* Two indicators are used in this report:
+total unemployment (`SL.UEM.TOTL.ZS`) and youth unemployment, ages
+15--24 (`SL.UEM.1524.ZS`). Both are expressed as a percentage of the
+labour force. Coverage of the raw data is worldwide and annual, during
+1991--2024.
 
-*AI use in enterprises - Eurostat* 
-Out of all indicators provided in (`isoc_eb_ai`), we selected the percentage of enterprises with 10 or more employees that use at least one AI technology including speech recognition, machine learning, etc. (`E_AI_TANY`)
-The dataset covers mainly data of EU countries for the years 2021, 2023, 2024 and 2025, prompting the need to extract only the unemployment rate of youths and the total population in EU countries from the World Bank datasets. 
+*AI use in enterprises - Eurostat* Out of all indicators provided in
+(`isoc_eb_ai`), we selected the percentage of enterprises with 10 or
+more employees that use at least one AI technology including speech
+recognition, machine learning, etc. (`E_AI_TANY`) The dataset covers
+mainly data of EU countries for the years 2021, 2023, 2024 and 2025,
+prompting the need to extract only the unemployment rate of youths and
+the total population in EU countries from the World Bank datasets.
 
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
 
-As we have chosen to focus on the years 2021-2024 for better comparison of the impact of AI before and after the launch of ChatGPT in 2022, we need to filter data of unemployment within this period (OpenAI, 2022). 
+As we have chosen to focus on the years 2021-2024 for better comparison
+of the impact of AI before and after the launch of ChatGPT in 2022, we
+need to filter data of unemployment within this period (OpenAI, 2022).
+
 ```{r data_cleaning, include=FALSE}
 
 wb_clean <- wb_raw %>%
   filter(year == 2021 | year == 2022 | year == 2023 | year == 2024)
 ```
 
-Out of many dimensions available in the raw data source, we filtered for number of enterprises using at least one of the AI technologies. 
+Out of many dimensions available in the raw data source, we filtered for
+number of enterprises using at least one of the AI technologies.
+
 ```{r data_cleaning_2, include=FALSE}
 ai_clean <- ai_raw %>%
   filter(indic_is == "E_AI_TANY")
 ```
-
 
 ## 3.2 Generate necessary variables
 
@@ -143,7 +178,7 @@ combined <- wb_clean %>%
   ))
 ```
 
-Variable 2: 
+Variable 2:
 
 ```{r gen_var2}
 
@@ -153,9 +188,9 @@ combined <- combined %>%
   mutate(youth_ratio = youth_unemp / total_unemp)
 ```
 
-
 Table with new variables
-```{r table}
+
+```{r table, echo=FALSE}
 combined %>%
   group_by(ai_group) %>%
   summarise(
@@ -165,9 +200,9 @@ combined %>%
   )
 ```
 
-
 ## 3.3 Visualize temporal variation
-```{r temporal_variation}
+
+```{r temporal_variation, echo=FALSE}
 yearly <- wb_clean %>%
   group_by(year) %>%
   summarise(
@@ -185,11 +220,13 @@ ggplot(yearly, aes(x = year)) +
   theme_minimal()
 ```
 
-ai_group - bins the continuous values into Low, Medium, and High, so we can compare youth unemployment outcomes across different levels of AI adoption.
+ai_group - bins the continuous values into Low, Medium, and High, so we
+can compare youth unemployment outcomes across different levels of AI
+adoption.
 
 ## 3.4 Visualize spatial variation
 
-```{r visualise map}
+```{r visualise map, echo=FALSE}
 
 ai_group <- combined %>%
    filter(year == 2024, !is.na(ai_group)) %>%
@@ -209,11 +246,9 @@ ggplot (combined, aes(x=ai_group,
 
 ```
 
-
 ## 3.5 Visualize sub-population variation
 
-
-```{r visualise_subpopulations}
+```{r visualise_subpopulations, echo=FALSE}
 combined %>%
   filter(year == 2024, !is.na(ai_group)) %>%
   mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High"))) %>%
@@ -224,16 +259,14 @@ combined %>%
   theme_minimal()
 ```
 
-Here you provide a description of why the plot above is relevant to your specific social problem.
-[tbu] 
-
-
+Here you provide a description of why the plot above is relevant to your
+specific social problem. [tbu]
 
 ## 3.6 Event analysis
 
 Analyze the relationship between two variables.
 
-```{r analysis}
+```{r analysis, echo=FALSE}
 ratio_by_year <- combined %>%
   group_by(year) %>%
   summarize(
@@ -252,29 +285,69 @@ ggplot(ratio_by_year, aes (x = year, y = mean_youth_ratio)) +
          y = "Youth-to-total unemployment ratio") +
     theme_minimal()
 ```
-The graph shows the average youth-to-total unemployment ratio across EU countries from 2021 to 2024. The ratio rises steadily after 2022 - the year ChatGPT launched - suggesting that young workers may be increasingly disadvantaged relative to the broader workforce as AI adoption grows. However, this is an association, not proof: other factors such as post-COVID labor market shifts or broader economic conditions could equally explain the trend.
+
+The graph shows the average youth-to-total unemployment ratio across EU
+countries from 2021 to 2024. The ratio rises steadily after 2022 - the
+year ChatGPT launched - suggesting that young workers may be
+increasingly disadvantaged relative to the broader workforce as AI
+adoption grows. However, this is an association, not proof: other
+factors such as post-COVID labor market shifts or broader economic
+conditions could equally explain the trend.
 
 # Part 4 - Discussion
 
 ## 4.1 Discuss your findings
 
-**AI Adoption and Unemployment in European Countries**
+*AI Adoption and Unemployment in European Countries*
 
-*1. Youth unemployment is consistently much higher than overall unemployment*
-From 2021–2024, youth unemployment (ages 15–24) remained substantially above total unemployment in all years. The youth-to-total unemployment ratio ranged from 2.64 to 2.77, meaning young people were approximately 2.6–2.8 times more likely to be unemployed than the average worker.
-*2. The youth unemployment gap appears to be increasing*
-The youth-to-total unemployment ratio increased from 2.64 in 2021 to 2.77 in 2024. This suggests that young workers may have become increasingly disadvantaged relative to the broader workforce during the period in which AI adoption accelerated. However, this is an association and does not prove causation.
-*3. Countries with medium AI adoption have the lowest unemployment*
-The analysis grouped countries into Low, Medium, and High AI adoption categories. Countries in the Medium AI adoption group had the lowest average total unemployment (5.76%) and youth unemployment (15.3%).
+*1. Youth unemployment is consistently much higher than overall
+unemployment* From 2021--2024, youth unemployment (ages 15--24) remained
+substantially above total unemployment in all years. The youth-to-total
+unemployment ratio ranged from 2.64 to 2.77, meaning young people were
+approximately 2.6--2.8 times more likely to be unemployed than the
+average worker.\
+
+*2. The youth unemployment gap appears to be increasing* The
+youth-to-total unemployment ratio increased from 2.64 in 2021 to 2.77 in
+2024. This suggests that young workers may have become increasingly
+disadvantaged relative to the broader workforce during the period in
+which AI adoption accelerated. However, this is an association and does
+not prove causation.\
+
+*3. Countries with medium AI adoption have the lowest unemployment* The
+analysis grouped countries into Low, Medium, and High AI adoption
+categories. Countries in the Medium AI adoption group had the lowest
+average total unemployment (5.76%) and youth unemployment (15.3%).\
+
 *4. High AI adoption is not associated with the worst youth outcomes*
-The Low AI adoption group had the highest average youth unemployment rate (19.1%), while the High AI adoption group averaged 17.6%. This suggests that higher AI adoption is not automatically associated with higher youth unemployment.
-*5. Youth unemployment remains disproportionately high regardless of AI level*
-The youth-to-total unemployment ratio remained relatively similar across AI groups (High: 2.57, Medium: 2.70, Low: 2.76), indicating that youth unemployment is a widespread challenge across Europe regardless of AI adoption intensity.
-*6. Country-specific differences appear important*
-The scatterplot and boxplot suggest substantial variation between countries within each AI adoption category. This indicates that national labour market conditions, economic structures, and policy differences may play a larger role than AI adoption alone.
+The Low AI adoption group had the highest average youth unemployment
+rate (19.1%), while the High AI adoption group averaged 17.6%. This
+suggests that higher AI adoption is not automatically associated with
+higher youth unemployment.\
 
-**Conclusion**
-The analysis provides limited evidence that higher AI adoption leads to higher unemployment. Although the youth-to-total unemployment ratio increased between 2021 and 2024, countries with high AI adoption did not experience the highest unemployment rates. In fact, countries with low AI adoption recorded the highest average youth unemployment. These findings suggest that factors other than AI adoption may play a larger role in explaining unemployment differences across European countries. Nevertheless, youth unemployment remains substantially higher than overall unemployment, highlighting the vulnerability of young workers during periods of technological and economic change.
+*5. Youth unemployment remains disproportionately high regardless of AI
+level* The youth-to-total unemployment ratio remained relatively similar
+across AI groups (High: 2.57, Medium: 2.70, Low: 2.76), indicating that
+youth unemployment is a widespread challenge across Europe regardless of
+AI adoption intensity.\
+
+*6. Country-specific differences appear important* The scatterplot and
+boxplot suggest substantial variation between countries within each AI
+adoption category. This indicates that national labour market
+conditions, economic structures, and policy differences may play a
+larger role than AI adoption alone.
+
+**Conclusion** The analysis provides limited evidence that higher AI
+adoption leads to higher unemployment. Although the youth-to-total
+unemployment ratio increased between 2021 and 2024, countries with high
+AI adoption did not experience the highest unemployment rates. In fact,
+countries with low AI adoption recorded the highest average youth
+unemployment. These findings suggest that factors other than AI adoption
+may play a larger role in explaining unemployment differences across
+European countries. Nevertheless, youth unemployment remains
+substantially higher than overall unemployment, highlighting the
+vulnerability of young workers during periods of technological and
+economic change.
 
 # Part 5 - Reproducibility
 
@@ -284,17 +357,23 @@ Provide the link to your PUBLIC repository here: ...
 
 ## 5.2 Reference list
 
-Cazzaniga, M., Jaumotte, F., Li, L., Melina, G., Panton, A. J., Pizzinelli, C., Rockall, E. J., Tavares, M. M., & Yao, K. (2024)
+Cazzaniga, M., Jaumotte, F., Li, L., Melina, G., Panton, A. J.,
+Pizzinelli, C., Rockall, E. J., Tavares, M. M., & Yao, K. (2024)
 
-Eurostat (2026). Artificial intelligence by size class of enterprise [Data set]. 
-https://doi.org/10.2908/ISOC_EB_AI
+Eurostat (2026). Artificial intelligence by size class of enterprise
+[Data set]. <https://doi.org/10.2908/ISOC_EB_AI>
 
-Global Employment Trends for Youth 2024. (2026). International Labour Organization. https://www.ilo.org/publications/major-publications/global-employment-trends-youth-2024
+Global Employment Trends for Youth 2024. (2026). International Labour
+Organization.
+<https://www.ilo.org/publications/major-publications/global-employment-trends-youth-2024>
 
-Introducing chatgpt. (2022). OpenAI. Retrieved June 16, 2026, from https://openai.com/index/chatgpt/
+Introducing chatgpt. (2022). OpenAI. Retrieved June 16, 2026, from
+<https://openai.com/index/chatgpt/>
 
-World Bank. (2026). Unemployment, total (% of total labor force) (modeled ILO estimate) [Data set]. ILOSTAT. 
-https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS
+World Bank. (2026). Unemployment, total (% of total labor force)
+(modeled ILO estimate) [Data set]. ILOSTAT.
+<https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS>
 
-World Bank. (2026). Unemployment, youth total (% of total labor force ages 15-24) (modeled ILO estimate) [Data set]. ILOSTAT. 
-https://data.worldbank.org/indicator/SL.UEM.1524.ZS 
+World Bank. (2026). Unemployment, youth total (% of total labor force
+ages 15-24) (modeled ILO estimate) [Data set]. ILOSTAT.
+<https://data.worldbank.org/indicator/SL.UEM.1524.ZS>

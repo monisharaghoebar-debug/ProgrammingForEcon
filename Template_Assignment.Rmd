@@ -1,11 +1,16 @@
 ---
-title: "Template"
-author: "Studentnames and studentnumbers here"
+title: "To what extent is the rate of adoption of AI at the workplace associated with the increase in the unemployment rate? A comparison of youth and the total labour force"
+author: "Tutorial 6 Group 2
+Vi Trang Le (2895396),
+Monisha Raghoebar (2875885), 
+Isabel Lust (tbu),
+Ermias Gebremichael (2825682),
+Pritish Dewan (2892767), 
+Noel Tripathi (2871659),
+Caelin Rohiemon (2823797)"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
-
-# Set-up your environment
 
 ```{r package_install, include=FALSE}
 install.packages("tidyverse")
@@ -26,17 +31,9 @@ require(eurostat)
 require(ggrepel)
 ```
 
-# Title Page
+# Table of Contents
+(tbu) 
 
-Vi Trang Le,
-Raghoebar Monisha, 
-Isabel Lust,
-Ermias Gebremichael,
-Pritish Dewan, 
-Noel Tripathi,
-Caelin Rohiemon
-
-Tutorial 6 Group 2
 # Part 1 - Identify a Social Problem
 
 ## 1.1 Describe the Social Problem

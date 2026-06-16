@@ -28,12 +28,12 @@ require(ggrepel)
 
 # Title Page
 
-Vi Trang Le
-Raghoebar Monisha 
-Isabel Lust 
-Ermias Gebremichael 
-Pritish Dewan 
-Noel Tripathi 
+Vi Trang Le,
+Raghoebar Monisha, 
+Isabel Lust,
+Ermias Gebremichael,
+Pritish Dewan, 
+Noel Tripathi,
 Caelin Rohiemon
 
 Tutorial 6 Group 2
@@ -46,15 +46,6 @@ Artificial Intelligence (AI) is changing the way how firms hire workers, manage 
 This becomes increasingly relevant for young workers aged 18-24. As workers in this age group, often have low to nil level of work experience and are very likely to work in temporary, entry level jobs. Therefore, this results in these workers being vulnerable when employers change the skills that they demand or when certain tasks can be fulfilled by AI. Youth Employment is therefore a social problem, because unemployment in early stages of their career/life can negatively affect future earnings, skill development and work experience which is required for higher skilled jobs (International Labour Organisation, 2024). 
 
 This project examines whether the rise of national AI-Development capacity is linked and associated with worse labour outcomes for young workers compared to the total labour force. We compare data from countries from the years 2021-2025. The aim is whether there is an observable association between AI adoption and youth unemployment relative to overall unemployment. 
-
-<<<<<<< HEAD
-Cazzaniga, M., Jaumotte, F., Li, L., Melina, G., Panton, A. J., Pizzinelli, C., Rockall, E. J., Tavares, M. M., & Yao, K. (2024)
-
-
-*Gen-AI: Artificial intelligence and the future of work*. International Monetary Fund. https://www.imf.org/en/Publications/Staff-Discussion-Notes/Issues/2024/01/14/Gen-AI-Artificial-Intelligence-and-the-Future-of-Work-542379
-
-
-International Labour Organization. (2024). *Global employment trends for youth 2024*. International Labour Organization. https://www.ilo.org/publications/major-publications/global-employment-trends-youth-2024
 
 # Part 2 - Data Sourcing
 

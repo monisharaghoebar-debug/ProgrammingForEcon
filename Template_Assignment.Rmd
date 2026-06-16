@@ -274,18 +274,17 @@ Provide the link to your PUBLIC repository here: ...
 
 ## 5.2 Reference list
 
-<<<<<<< HEAD
-Introducing chatgpt. (2022). OpenAI. Retrieved June 16, 2026, from https://openai.com/index/chatgpt/
-
-=======
-Use APA referencing throughout your document.
-
 Cazzaniga, M., Jaumotte, F., Li, L., Melina, G., Panton, A. J., Pizzinelli, C., Rockall, E. J., Tavares, M. M., & Yao, K. (2024)
 
-World Bank Open Data. (n.d.). World Bank Open Data. https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS
+Eurostat (2026). Artificial intelligence by size class of enterprise [Data set]. 
+https://doi.org/10.2908/ISOC_EB_AI
 
-(2026). Europa.eu. https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ain2/default/table?lang=en
+Global Employment Trends for Youth 2024. (2026). International Labour Organization. https://www.ilo.org/publications/major-publications/global-employment-trends-youth-2024
 
-Global Employment Trends for Youth 2024. (2026, May 21). International Labour Organization. https://www.ilo.org/publications/major-publications/global-employment-trends-youth-2024
+Introducing chatgpt. (2022). OpenAI. Retrieved June 16, 2026, from https://openai.com/index/chatgpt/
 
->>>>>>> 142816df9632fa507f0e29a7dfc046998e18734e
+World Bank. (2026). Unemployment, total (% of total labor force) (modeled ILO estimate) [Data set]. ILOSTAT. 
+https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS
+
+World Bank. (2026). Unemployment, youth total (% of total labor force ages 15-24) (modeled ILO estimate) [Data set]. ILOSTAT. 
+https://data.worldbank.org/indicator/SL.UEM.1524.ZS 

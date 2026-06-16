@@ -257,24 +257,24 @@ The graph shows the average youth-to-total unemployment ratio across EU countrie
 # Part 4 - Discussion
 
 ## 4.1 Discuss your findings
+ AI Adoption and Unemployment in European Countries:
 
-**AI Adoption and Unemployment in European Countries**
-
-*1. Youth unemployment is consistently much higher than overall unemployment*
+1. Youth unemployment is consistently much higher than overall unemployment
 From 2021–2024, youth unemployment (ages 15–24) remained substantially above total unemployment in all years. The youth-to-total unemployment ratio ranged from 2.64 to 2.77, meaning young people were approximately 2.6–2.8 times more likely to be unemployed than the average worker.
-*2. The youth unemployment gap appears to be increasing*
+2. The youth unemployment gap appears to be increasing
 The youth-to-total unemployment ratio increased from 2.64 in 2021 to 2.77 in 2024. This suggests that young workers may have become increasingly disadvantaged relative to the broader workforce during the period in which AI adoption accelerated. However, this is an association and does not prove causation.
-*3. Countries with medium AI adoption have the lowest unemployment*
+3. Countries with medium AI adoption have the lowest unemployment
 The analysis grouped countries into Low, Medium, and High AI adoption categories. Countries in the Medium AI adoption group had the lowest average total unemployment (5.76%) and youth unemployment (15.3%).
-*4. High AI adoption is not associated with the worst youth outcomes*
+4. High AI adoption is not associated with the worst youth outcomes
 The Low AI adoption group had the highest average youth unemployment rate (19.1%), while the High AI adoption group averaged 17.6%. This suggests that higher AI adoption is not automatically associated with higher youth unemployment.
-*5. Youth unemployment remains disproportionately high regardless of AI level*
+5. Youth unemployment remains disproportionately high regardless of AI level
 The youth-to-total unemployment ratio remained relatively similar across AI groups (High: 2.57, Medium: 2.70, Low: 2.76), indicating that youth unemployment is a widespread challenge across Europe regardless of AI adoption intensity.
-*6. Country-specific differences appear important*
+6. Country-specific differences appear important
 The scatterplot and boxplot suggest substantial variation between countries within each AI adoption category. This indicates that national labour market conditions, economic structures, and policy differences may play a larger role than AI adoption alone.
-
-**Conclusion**
+Conclusion
 The analysis provides limited evidence that higher AI adoption leads to higher unemployment. Although the youth-to-total unemployment ratio increased between 2021 and 2024, countries with high AI adoption did not experience the highest unemployment rates. In fact, countries with low AI adoption recorded the highest average youth unemployment. These findings suggest that factors other than AI adoption may play a larger role in explaining unemployment differences across European countries. Nevertheless, youth unemployment remains substantially higher than overall unemployment, highlighting the vulnerability of young workers during periods of technological and economic change.
+
+
 
 # Part 5 - Reproducibility
 

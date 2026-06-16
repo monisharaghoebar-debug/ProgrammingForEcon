@@ -133,7 +133,7 @@ ai_clean <- ai_raw %>%
 
 Variable 1: AI adoption rate, or AI usage intensity
 
-```{r gen_var1}
+```{r gen_var1, include=FALSE}
 combined <- wb_clean %>%
   left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
   mutate(ai_group = case_when(
@@ -145,17 +145,16 @@ combined <- wb_clean %>%
 
 Variable 2: 
 
-```{r gen_var2}
+```{r gen_var2, include=FALSE}
 
 wb_clean <- wb_clean %>%
   mutate(youth_ratio = youth_unemp / total_unemp)
-combined <- combined %>%
-  mutate(youth_ratio = youth_unemp / total_unemp)
+
 ```
 
 
 Table with new variables
-```{r table}
+```{r table, include=FALSE}
 combined %>%
   group_by(ai_group) %>%
   summarise(
@@ -167,7 +166,7 @@ combined %>%
 
 
 ## 3.3 Visualize temporal variation
-```{r temporal_variation}
+```{r temporal_variation, include=FALSE}
 yearly <- wb_clean %>%
   group_by(year) %>%
   summarise(
@@ -189,7 +188,7 @@ ai_group - bins the continuous values into Low, Medium, and High, so we can comp
 
 ## 3.4 Visualize spatial variation
 
-```{r visualise map}
+```{r visualise map, include=FALSE}
 
 ai_group <- combined %>%
    filter(year == 2024, !is.na(ai_group)) %>%
@@ -213,7 +212,7 @@ ggplot (combined, aes(x=ai_group,
 ## 3.5 Visualize sub-population variation
 
 
-```{r visualise_subpopulations}
+```{r visualise_subpopulations, include=FALSE}
 combined %>%
   filter(year == 2024, !is.na(ai_group)) %>%
   mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High"))) %>%
@@ -225,7 +224,7 @@ combined %>%
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
-[tbu] 
+
 
 
 
@@ -233,7 +232,7 @@ Here you provide a description of why the plot above is relevant to your specifi
 
 Analyze the relationship between two variables.
 
-```{r analysis}
+```{r analysis, include=FALSE}
 ratio_by_year <- combined %>%
   group_by(year) %>%
   summarize(
@@ -257,24 +256,6 @@ The graph shows the average youth-to-total unemployment ratio across EU countrie
 # Part 4 - Discussion
 
 ## 4.1 Discuss your findings
-
-**AI Adoption and Unemployment in European Countries**
-
-*1. Youth unemployment is consistently much higher than overall unemployment*
-From 2021–2024, youth unemployment (ages 15–24) remained substantially above total unemployment in all years. The youth-to-total unemployment ratio ranged from 2.64 to 2.77, meaning young people were approximately 2.6–2.8 times more likely to be unemployed than the average worker.
-*2. The youth unemployment gap appears to be increasing*
-The youth-to-total unemployment ratio increased from 2.64 in 2021 to 2.77 in 2024. This suggests that young workers may have become increasingly disadvantaged relative to the broader workforce during the period in which AI adoption accelerated. However, this is an association and does not prove causation.
-*3. Countries with medium AI adoption have the lowest unemployment*
-The analysis grouped countries into Low, Medium, and High AI adoption categories. Countries in the Medium AI adoption group had the lowest average total unemployment (5.76%) and youth unemployment (15.3%).
-*4. High AI adoption is not associated with the worst youth outcomes*
-The Low AI adoption group had the highest average youth unemployment rate (19.1%), while the High AI adoption group averaged 17.6%. This suggests that higher AI adoption is not automatically associated with higher youth unemployment.
-*5. Youth unemployment remains disproportionately high regardless of AI level*
-The youth-to-total unemployment ratio remained relatively similar across AI groups (High: 2.57, Medium: 2.70, Low: 2.76), indicating that youth unemployment is a widespread challenge across Europe regardless of AI adoption intensity.
-*6. Country-specific differences appear important*
-The scatterplot and boxplot suggest substantial variation between countries within each AI adoption category. This indicates that national labour market conditions, economic structures, and policy differences may play a larger role than AI adoption alone.
-
-**Conclusion**
-The analysis provides limited evidence that higher AI adoption leads to higher unemployment. Although the youth-to-total unemployment ratio increased between 2021 and 2024, countries with high AI adoption did not experience the highest unemployment rates. In fact, countries with low AI adoption recorded the highest average youth unemployment. These findings suggest that factors other than AI adoption may play a larger role in explaining unemployment differences across European countries. Nevertheless, youth unemployment remains substantially higher than overall unemployment, highlighting the vulnerability of young workers during periods of technological and economic change.
 
 # Part 5 - Reproducibility
 

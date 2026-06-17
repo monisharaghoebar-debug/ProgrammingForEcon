@@ -29,6 +29,7 @@ install.packages("WDI")
 install.packages("eurostat")
 install.packages("ggrepel")
 install.packages("tinytex")
+install.packages("maps")
 ```
 
 ```{r packages, include=FALSE}
@@ -214,7 +215,7 @@ ai_group - bins the continuous values into Low, Medium, and High, so we can comp
 
 ## 3.4 Visualize spatial variation
 
-```{r visualise map, echo=FALSE}
+```{r visualise map, include=FALSE}
 
 ai_group <- combined %>%
    filter(year == 2024, !is.na(ai_group)) %>%
@@ -232,6 +233,44 @@ ggplot (combined, aes(x=ai_group,
        y="youth unemployment(%)", 
        title= "AI intensity and unemployment in EU countries") + theme_minimal()
 
+```
+
+```{r world heatmap beta, echo=FALSE}
+library(tidyverse)
+library(maps) 
+
+# 1. One AI value per country for 2024 (mean safely collapses any duplicate rows)
+ai_map <- combined %>%
+  filter(year == 2024) %>%
+  group_by(country) %>%
+  summarise(values = mean(values, na.rm = TRUE)) %>%
+  ungroup() %>%
+  # match World Bank names to map_data("world") names
+  mutate(region = recode(country,
+    "Czechia"            = "Czech Republic",
+    "Slovak Republic"    = "Slovakia",
+    "Russian Federation" = "Russia",
+    "United Kingdom"      = "UK",
+    "Turkiye"             = "Turkey",
+    .default = country))
+
+# 2. World outlines, minus Antarctica
+world_map <- map_data("world")
+world_map <- subset(world_map, region != "Antarctica")
+
+# 3. The heat map
+ggplot(ai_map) +
+  geom_map(data = world_map, map = world_map, aes(map_id = region),
+           fill = "grey95", color = "grey70", linewidth = 0.2) +
+  geom_map(map = world_map, aes(map_id = region, fill = values),
+           color = "grey70", linewidth = 0.2) +
+  scale_fill_gradient(low = "#fff7bc", high = "#cc4c02",
+                      name = "% enterprises\nusing AI", na.value = "grey95") +
+  expand_limits(x = world_map$long, y = world_map$lat) +
+  coord_quickmap(xlim = c(-25, 45), ylim = c(34, 72)) +   # crop to Europe
+  labs(title = "AI adoption by enterprises across Europe (2024)") +
+  theme_void() +
+  theme(legend.position = "right")
 ```
 
 ## 3.5 Visualize sub-population variation

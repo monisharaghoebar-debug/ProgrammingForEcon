@@ -256,7 +256,6 @@ ai_map <- combined %>%
 
 # 2. World outlines, minus Antarctica
 world_map <- map_data("world")
-world_map <- subset(world_map, region != "Antarctica")
 
 # 3. The heat map
 ggplot(ai_map) +

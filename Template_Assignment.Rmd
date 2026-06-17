@@ -1,18 +1,23 @@
 ---
 title: "To what extent is the rate of adoption of AI at the workplace associated with the increase in the unemployment rate? A comparison of youth and the total labour force"
-author: Vi Trang Le ('2895396') Monisha Raghoebar ('2875885') 
- Isabel Lust (tbu)
- Ermias Gebremichael ('2825682')
- Pritish Dewan ('2892767')
- Noel Tripathi ('2871659')
- Caelin Rohiemon ('2823797')"
+author: 
+  - "Tutorial 6 Group 2"
+  - "Vi Trang Le (2895396)"
+  - "Monisha Raghoebar (2875885)"
+  - "Isabel Lust (tbu)"
+  - "Ermias Gebremichael (2825682)"
+  - "Pritish Dewan (2892767)"
+  - "Noel Tripathi (2871659)"
+  - "Caelin Rohiemon (2823797)"
 date: "`r Sys.Date()`"
 output:
   pdf_document:
     toc: true
     toc_depth: 2
-editor_options: 
-  markdown: 
+header-includes:
+  - \renewcommand{\and}{\\}
+editor_options:
+  markdown:
     wrap: 72
 ---
 

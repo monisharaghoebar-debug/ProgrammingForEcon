@@ -132,17 +132,9 @@ Another point worth mentioning is that AI adoption rate in 2022 is unavailable f
 
 ## 2.2 Loading the data
 
-```{r, include=FALSE}
-head(ai_raw) 
-str(ai_raw)
-summary(ai_raw)
-names(ai_raw)
-
-head(wb_raw)
-str(wb_raw)
-summary(wb_raw)
-names(wb_raw)
-
+```{r, echo=FALSE}
+glimpse(wb_raw)
+glimpse(ai_raw)
 ```
 
 ```{r, echo=FALSE}
@@ -152,7 +144,7 @@ dims <- data.frame(
   Rows    = c(nrow(wb_raw), nrow(ai_raw)),
   Columns = c(ncol(wb_raw), ncol(ai_raw))
 )
-kable(dims, caption = "Size of each raw dataset")
+kable(dims, caption = "Size of each raw dataset", align="c")
 ```
 
 ## 2.3 Describe the type of variables included
@@ -169,7 +161,7 @@ The dataset covers mainly data of EU countries for the years 2021, 2023, 2024 an
 
 ## 3.1 Data cleaning
 
-As we have chosen to focus on the years 2021-2024 for better comparison of the impact of AI before and after the launch of ChatGPT in 2022, we need to filter data of unemployment within this period (OpenAI, 2022).
+As we have chosen to focus on the years 2021-2024 for better comparison of the impact of AI before and after the launch of ChatGPT in 2022, we need to **filter data of unemployment within this period** (OpenAI, 2022).
 
 ```{r data_cleaning, include=FALSE}
 
@@ -177,7 +169,7 @@ wb_clean <- wb_raw %>%
   filter(year == 2021 | year == 2022 | year == 2023 | year == 2024)
 ```
 
-Out of many dimensions available in the raw data source, we filtered for number of enterprises using at least one of the AI technologies.
+Out of many dimensions available in the raw data source, we **filtered for number of enterprises using at least one of the AI technologies** (E_AI_TANY).
 
 ```{r data_cleaning_2, include=FALSE}
 ai_clean <- ai_raw %>%
@@ -202,12 +194,25 @@ var_table <- data.frame(
 )
 kable(var_table, caption = "Variables in the merged (combined) dataset")
 ```
+```{r, echo=FALSE}
+# keep ONE AI row per country-year (10+ employees, total economy)
+ai_clean <- ai_clean %>%
+  filter(unit == "PC_ENT", size_emp == "GE10", nace_r2 == "C10-S951_X_K")
+
+combined <- wb_clean %>%
+  left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
+  mutate(ai_group = case_when(
+    is.na(values) ~ NA_character_,      
+    values < 10   ~ "Low",
+    values < 30   ~ "Medium",
+    TRUE          ~ "High"))
+```
 
 ## 3.2 Generate necessary variables
 
 Variable 1: AI adoption rate, or AI usage intensity
 
-```{r gen_var1}
+```{r gen_var1, echo=FALSE}
 combined <- wb_clean %>%
   left_join(ai_clean, by = c("iso2c" = "geo", "year" = "TIME_PERIOD")) %>%
   mutate(ai_group = case_when(
@@ -217,9 +222,13 @@ combined <- wb_clean %>%
   ))
 ```
 
+*ai_group* - bins the continuous values into Low, Medium, and High, so we can compare youth unemployment outcomes across different levels of AI adoption.
+
 Variable 2:
 
-```{r gen_var2}
+Youth_ratio is youth_unemp / total_unemp. It is the youth-to-total unemployment ratio. A value above 1 means young workers face higher unemployment than the workforce overall, which captures their relative disadvantage.
+
+```{r gen_var2, echo=FALSE}
 
 wb_clean <- wb_clean %>%
   mutate(youth_ratio = youth_unemp / total_unemp)
@@ -238,6 +247,22 @@ combined %>%
     mean_youth_ratio = mean(youth_ratio, na.rm = TRUE)
   )
 ```
+
+```{r, echo=FALSE}
+library(knitr)
+combined %>%
+  filter(year == 2024, !is.na(ai_group)) %>%
+  group_by(ai_group) %>%
+  summarise(
+    n                = n(),
+    mean_total_unemp = mean(total_unemp, na.rm = TRUE),
+    mean_youth_unemp = mean(youth_unemp, na.rm = TRUE),
+    mean_youth_ratio = mean(youth_ratio, na.rm = TRUE)
+  ) %>%
+  kable(caption = "Unemployment by level of AI adoption (2024)",
+        digits = 2, align = "c")
+```
+No country reached the "High" (>30%) threshold in 2024, so all European countries fall into the Low or Medium adoption groups. AI usage across Europe remains at low to moderate levels.
 
 ## 3.3 Visualize temporal variation
 
@@ -259,11 +284,13 @@ ggplot(yearly, aes(x = year)) +
   theme_minimal()
 ```
 
-ai_group - bins the continuous values into Low, Medium, and High, so we can compare youth unemployment outcomes across different levels of AI adoption.
+
+This plot tracks average youth (15–24 years old) and total unemployment across EU countries over time. Youth unemployment is consistently higher than the total rate in every year, and the two series move in similar manners, both rising in downturns and easing in recoveries, until 2023. In 2024, there is a slight difference as the total unemployment rate has been gradually decreasing since 2023, yet the youth unemployment rate keeps increasing since 2023. 
+Knowing this is crucial for our question because it shows young workers are persistently the more vulnerable group. They are the segment that is most likely to be affected by the rise of AI usage in the labour market. 
 
 ## 3.4 Visualize spatial variation
 
-```{r world heatmap beta, echo=FALSE}
+```{r world_heatmap_beta, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(maps) 
 
@@ -299,21 +326,22 @@ ggplot(ai_map) +
   theme_void() +
   theme(legend.position = "right")
 ```
+The map shows each European country by the share of its enterprises using at least one AI technology in 2024. Adoption is uneven: it is highest in the Nordic countries (Denmark, Finland, Sweden) and parts of north-west Europe, and lowest across southern and eastern Europe. This geography is inmportant to our question because it identifies where AI is most embedded in the economy, and therefore where any AI-related effect on jobs should be most visible. 
+A point worth taking notes is that countries with missing or insufficient data are shown in grey rather than left blank, so regions with the absence of colours signifies data gaps, not zero AI adoption.
 
 ## 3.5 Visualize sub-population variation
 
 ```{r visualise_subpopulations, echo=FALSE}
 combined %>%
   filter(year == 2024, !is.na(ai_group)) %>%
-  mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High"))) %>%
+  mutate(ai_group = factor(ai_group, levels = c("Low", "Medium"))) %>%
   ggplot(aes(x = ai_group, y = youth_unemp)) +
   geom_boxplot(na.rm = TRUE, fill = "antiquewhite", color = "navy", outlier.color = "aquamarine", varwidth = TRUE) +
   labs(title = "Youth unemployment by level of AI adoption (2024)",
        x = "AI adoption group", y = "Youth unemployment (%)") +
   theme_minimal()
 ```
-
-Here you provide a description of why the plot above is relevant to your specific social problem. [tbu]
+This boxplot compares youth unemployment across European countries grouped by AI-adoption level in 2024. Because no country exceeded 30% adoption, all countries fall into the Low or Medium groups. AI usage across Europe is still only low to moderate. Counter to the misconception of "more AI means fewer jobs", youth unemployment is lower in Medium-adoption countries (median around 12%) than in Low-adoption ones (around 18.5%). The boxes overlap substantially, however, so the difference between groups is modest relative to the wide variation within each group. This suggests AI-adoption level alone does not explain youth unemployment. The pattern more likely reflects that low-adoption countries tend to be economies with structurally high youth unemployment (e.g. parts of southern Europe), rather than an effect of AI itself.
 
 ## 3.6 Event analysis
 
@@ -354,17 +382,19 @@ substantially above total unemployment in all years. The youth-to-total unemploy
 **2. The youth unemployment gap appears to be increasing** \
 The youth-to-total unemployment ratio increased from 2.64 in 2021 to 2.77 in 2024. This suggests that young workers may have become increasingly disadvantaged relative to the broader workforce during the period in which AI adoption accelerated. However, this is an association and does not prove causation.\
 
-**3. Countries with medium AI adoption have the lowest unemployment** \
-The analysis grouped countries into Low, Medium, and High AI adoption categories. Countries in the Medium AI adoption group had the lowest average total unemployment (5.76%) and youth unemployment (15.3%).\
+**3. AI adoption across Europe is still low-to-moderate** \
+In 2024 no country exceeded 30% enterprise adoption, so all countries fall into the Low or Medium groups. AI is not yet deeply embedded in any European economy.\
 
-**4. High AI adoption is not associated with the worst youth outcomes** \
-The Low AI adoption group had the highest average youth unemployment rate (19.1%), while the High AI adoption group averaged 17.6%. This suggests that higher AI adoption is not automatically associated with higher youth unemployment.\
+**4. Higher adoption is not associated with worse youth outcomes** \ Medium-adoption countries had lower average youth unemployment (14.9%) than Low-adoption ones (18.5%). If anything, the association opposes the misconception of "AI hinders youth jobs", though this is an association, not evidence of cause.\
 
 **5. Youth unemployment remains disproportionately high regardless of AI level** \
-The youth-to-total unemployment ratio remained relatively similar across AI groups (High: 2.57, Medium: 2.70, Low: 2.76), indicating that youth unemployment is a widespread challenge across Europe regardless of AI adoption intensity.\
+Group differences are small next to within-group variation. The boxplots overlap heavily, and the youth-to-total ratio is similar across both groups (around 2.7–2.8), indicating youth disadvantage is widespread across Europe regardless of AI level.\
 
 **6. Country-specific differences appear important** \
-The scatterplot and boxplot suggest substantial variation between countries within each AI adoption category. This indicates that national labour market conditions, economic structures, and policy differences may play a larger role than AI adoption alone.
+The heatmap and boxplot suggest substantial variation between countries within each AI adoption category. This indicates that national labour market conditions, economic structures, and policy differences may play a larger role in shifting unemployment trends than AI adoption alone.
+
+**Limitations**
+The relationship between AI adoption rate and unemployment is associational, not causal: the post-ChatGPT window is short, AI adoption measures enterprise use rather than job displacement, and confounders (the COVID recovery, differing economies) might play a larger role in explaining the variation. Therefore, we cannot conclude that the implementation of AI causes a worse-off unemployment trend for youths. 
 
 # Part 5 - Reproducibility
 

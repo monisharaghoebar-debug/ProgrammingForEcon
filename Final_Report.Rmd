@@ -4,7 +4,7 @@ author:
   - "Tutorial 6 Group 2"
   - "Vi Trang Le (2895396)"
   - "Monisha Raghoebar (2875885)"
-  - "Isabel Lust (tbu)"
+  - "Isabel Lust (2892063)"
   - "Ermias Gebremichael (2825682)"
   - "Pritish Dewan (2892767)"
   - "Noel Tripathi (2871659)"
@@ -48,7 +48,7 @@ require(ggrepel)
 Artificial Intelligence (AI) is changing the way how firms hire workers,
 manage and organise work and use technology which has led to an
 increasingly important social and economic issue. With recent
-developments in generative AI, especially after the release of Chatgpt,
+developments in generative AI, especially after the release of ChatGPT,
 in Novemeber of 2022, AI tools are more visible and widely used across
 different industries. It is argued that AI in the workplace increases
 productivity but it also may reduce demand of some type of labour,
@@ -73,12 +73,16 @@ relative to overall unemployment.
 
 # Part 2 - Data Sourcing
 
-## 2.1 Load in the data
+## 2.1 Description and Limitations
 
-The data was compiled from the following two datasets of the World Bank
-Data: - Unemployment, youth total (% of total labor force ages 15-24)
-(modeled ILO estimate). - Unemployment, total (% of total labor force)
-(modeled ILO estimate).
+The data was compiled from the following datasets: \
+
+**The World Bank Data:** \
+- Unemployment, youth total (% of total labor force ages 15-24) (modeled ILO estimate): `SL.UEM.1524.ZS` \
+- Unemployment, total (% of total labor force) (modeled ILO estimate): `SL.UEM.TOTL.ZS` \
+
+**Eurostat:** \
+- AI adoption rate, or AI used in enterprises: `isoc_eb_ai`
 
 ```{r loading_data and retrieve only data of European countries, include=FALSE}
 
@@ -107,7 +111,26 @@ if (file.exists("wb_raw.rds")) {
 }
 ```
 
-## 2.2 Provide a short summary of the dataset(s)
+```{r, echo=FALSE}
+library(knitr)
+data_sources <- data.frame(
+  Dataset = c("World Bank (WDI)", "Eurostat (isoc_eb_ai)"),
+  `Unit of observation` = c("Country-year", "Country-year"),
+  `Key variables` = c("total_unemp, youth_unemp (% of labour force)",
+                      "values (% of enterprises using AI)"),
+  Source = c("World Bank / ILO modelled estimates (ILOSTAT)",
+             "Eurostat: ICT usage in enterprises survey"),
+  Period = c("1991-2024 (annual)", "2021, 2023, 2024, 2025"),
+  check.names = FALSE
+)
+kable(data_sources, caption = "Datasets used in this report")
+```
+
+**Limitations**
+The Eurostat dataset of AI adoption rate only consists of European countries with temporal data from 2021 to 2025. Because of this, the findings cannot be generalised to other regions and the whole world. A wider dataset with more temporal data points can help increase accuracy of the findings and produce more predictive outcomes, but since the wave of AI usage is a fairly new societal shift, it is reasonable that there are currently few temporal data to observe. 
+Another point worth mentioning is that AI adoption rate in 2022 is unavailable from the source, so we lack one important temporal value of the year ChatGPT was launched. To accommodate this, this paper looks at any difference of the association of AI usage and unemployment rate before and after the launch of ChatGPT, which works as the main event that signals the rise of the AI wave. 
+
+## 2.2 Loading the data
 
 ```{r, include=FALSE}
 head(ai_raw) 
@@ -122,18 +145,24 @@ names(wb_raw)
 
 ```
 
+```{r, echo=FALSE}
+library(knitr)
+dims <- data.frame(
+  Dataset = c("wb_raw (World Bank)", "ai_raw (Eurostat)"),
+  Rows    = c(nrow(wb_raw), nrow(ai_raw)),
+  Columns = c(ncol(wb_raw), ncol(ai_raw))
+)
+kable(dims, caption = "Size of each raw dataset")
+```
+
 ## 2.3 Describe the type of variables included
 
-The AI data comes from Eurostats that shows business wealth and
-resources. The unemployment data comes from World Bankdata that shows the financial trouble and living standards. The two main variables are Total unemployment rate and youth unemployment. The youth unemployment is used as the sub-population to see how young workers are affected by AI usage in businesses. 
-Where: European countries only. 
-When: Years 2021 to 2025 (excluing 2022). 
-This timeline captures the exact period where the post-pandemic labour market met the massive generative AI boom.
-
-*Unemployment rate - World Bank* Two indicators are used in this report:
+**Unemployment rate - World Bank** \
+Two indicators are used in this report:
 total unemployment (`SL.UEM.TOTL.ZS`) and youth unemployment, ages 15-24 (`SL.UEM.1524.ZS`). Both are expressed as a percentage of the labour force. Coverage of the raw data is worldwide and annual, during 1991-2024.
 
-*AI use in enterprises - Eurostat* Out of all indicators provided in (`isoc_eb_ai`), we selected the percentage of enterprises with 10 or more employees that use at least one AI technology including speech recognition, machine learning, etc. (`E_AI_TANY`) 
+**AI use in enterprises - Eurostat** \
+Out of all indicators provided in (`isoc_eb_ai`), we selected the percentage of enterprises with 10 or more employees that use at least one AI technology including speech recognition, machine learning, etc. (`E_AI_TANY`) 
 The dataset covers mainly data of EU countries for the years 2021, 2023, 2024 and 2025, prompting the need to extract only the unemployment rate of youths and the total population in EU countries from the World Bank datasets.
 
 # Part 3 - Quantifying
@@ -153,6 +182,25 @@ Out of many dimensions available in the raw data source, we filtered for number 
 ```{r data_cleaning_2, include=FALSE}
 ai_clean <- ai_raw %>%
   filter(indic_is == "E_AI_TANY")
+```
+
+```{r, echo=FALSE}
+var_table <- data.frame(
+  Variable = c("country", "iso2c", "year", "total_unemp", "youth_unemp",
+               "values", "ai_group", "youth_ratio"),
+  Type = c("character", "character", "integer", "numeric", "numeric",
+           "numeric", "factor", "numeric"),
+  Meaning = c("Country name",
+              "2-letter country code",
+              "Year of observation",
+              "Total unemployment (% of labour force)",
+              "Youth unemployment, ages 15-24 (% of labour force)",
+              "Enterprises using at least one AI technology (%)",
+              "AI adoption group: Low / Medium / High (new variable)",
+              "Youth-to-total unemployment ratio (new variable)"),
+  check.names = FALSE
+)
+kable(var_table, caption = "Variables in the merged (combined) dataset")
 ```
 
 ## 3.2 Generate necessary variables
@@ -214,26 +262,6 @@ ggplot(yearly, aes(x = year)) +
 ai_group - bins the continuous values into Low, Medium, and High, so we can compare youth unemployment outcomes across different levels of AI adoption.
 
 ## 3.4 Visualize spatial variation
-
-```{r visualise map, include=FALSE}
-
-ai_group <- combined %>%
-   filter(year == 2024, !is.na(ai_group)) %>%
-  mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High")))
-
-ggplot (combined, aes(x=ai_group, 
-                    y= youth_unemp,
-                    size= total_unemp,
-                    label=country)) +
-  geom_point(alpha=0.7, color = "blue") + 
-  geom_text_repel(size=3, max.overlaps= 20)+
-  scale_size_continuous(name="total unemployment (%)") +
-  
-  labs(x="AI intensity", 
-       y="youth unemployment(%)", 
-       title= "AI intensity and unemployment in EU countries") + theme_minimal()
-
-```
 
 ```{r world heatmap beta, echo=FALSE}
 library(tidyverse)

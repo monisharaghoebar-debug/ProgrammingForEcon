@@ -262,7 +262,6 @@ combined %>%
   kable(caption = "Unemployment by level of AI adoption (2024)",
         digits = 2, align = "c")
 ```
-No country reached the "High" (>30%) threshold in 2024, so all European countries fall into the Low or Medium adoption groups. AI usage across Europe remains at low to moderate levels.
 
 ## 3.3 Visualize temporal variation
 
@@ -334,14 +333,14 @@ A point worth taking notes is that countries with missing or insufficient data a
 ```{r visualise_subpopulations, echo=FALSE}
 combined %>%
   filter(year == 2024, !is.na(ai_group)) %>%
-  mutate(ai_group = factor(ai_group, levels = c("Low", "Medium"))) %>%
+  mutate(ai_group = factor(ai_group, levels = c("Low", "Medium", "High"))) %>%
   ggplot(aes(x = ai_group, y = youth_unemp)) +
   geom_boxplot(na.rm = TRUE, fill = "antiquewhite", color = "navy", outlier.color = "aquamarine", varwidth = TRUE) +
   labs(title = "Youth unemployment by level of AI adoption (2024)",
        x = "AI adoption group", y = "Youth unemployment (%)") +
   theme_minimal()
 ```
-This boxplot compares youth unemployment across European countries grouped by AI-adoption level in 2024. Because no country exceeded 30% adoption, all countries fall into the Low or Medium groups. AI usage across Europe is still only low to moderate. Counter to the misconception of "more AI means fewer jobs", youth unemployment is lower in Medium-adoption countries (median around 12%) than in Low-adoption ones (around 18.5%). The boxes overlap substantially, however, so the difference between groups is modest relative to the wide variation within each group. This suggests AI-adoption level alone does not explain youth unemployment. The pattern more likely reflects that low-adoption countries tend to be economies with structurally high youth unemployment (e.g. parts of southern Europe), rather than an effect of AI itself.
+This boxplot compares youth unemployment across European countries grouped by AI-adoption level in 2024. Most countries fall into the Low (15 countries) or Medium (17 countries) groups; only two countries reach the High (>30%) group. Among the two well-populated groups, youth unemployment is lower in Medium-adoption countries (median around 12%) than in Low-adoption ones (around 18.5%), which is the opposite of the misconception of "more AI means fewer youth jobs" The boxes overlap substantially, so differences between groups are modest relative to the wide variation within each group. This suggests AI-adoption level alone does not explain youth unemployment: the two High-adoption countries happen to have high youth unemployment for reasons tied to their own labour markets, and low-adoption countries tend to be economies with structurally high youth unemployment (e.g. parts of southern Europe), rather than this being an effect of AI.
 
 ## 3.6 Event analysis
 
@@ -383,15 +382,16 @@ substantially above total unemployment in all years. The youth-to-total unemploy
 The youth-to-total unemployment ratio increased from 2.64 in 2021 to 2.77 in 2024. This suggests that young workers may have become increasingly disadvantaged relative to the broader workforce during the period in which AI adoption accelerated. However, this is an association and does not prove causation.\
 
 **3. AI adoption across Europe is still low-to-moderate** \
-In 2024 no country exceeded 30% enterprise adoption, so all countries fall into the Low or Medium groups. AI is not yet deeply embedded in any European economy.\
+In 2024 only two countries exceeded 30% enterprise adoption, so most European countries fall into the Low or Medium groups. AI is not yet deeply embedded in the European economy.\
 
-**4. Higher adoption is not associated with worse youth outcomes** \ Medium-adoption countries had lower average youth unemployment (14.9%) than Low-adoption ones (18.5%). If anything, the association opposes the misconception of "AI hinders youth jobs", though this is an association, not evidence of cause.\
+**4. Higher adoption is not associated with worse youth outcomes** \
+Among the well-populated groups, Medium-adoption countries had lower average youth unemployment (14.9%) than Low-adoption ones (18.5%). The High group's higher unemployment rate (25.5%) rests on just two countries, so it reflects their specific labour markets rather than an AI effect. Overall there is no clear causal pattern between AI adoption and unemployment.\
 
 **5. Youth unemployment remains disproportionately high regardless of AI level** \
-Group differences are small next to within-group variation. The boxplots overlap heavily, and the youth-to-total ratio is similar across both groups (around 2.7–2.8), indicating youth disadvantage is widespread across Europe regardless of AI level.\
+Group differences are small next to within-group variation. The boxplots overlap heavily, and the youth-to-total ratio is similar across all groups (Low 2.78, Medium 2.75, High 2.28, indicating youth disadvantage is widespread across Europe regardless of AI level.\
 
 **6. Country-specific differences appear important** \
-The heatmap and boxplot suggest substantial variation between countries within each AI adoption category. This indicates that national labour market conditions, economic structures, and policy differences may play a larger role in shifting unemployment trends than AI adoption alone.
+The heatmap and boxplot suggest substantial variation between countries within each AI adoption category. This indicates that national labour market conditions, economic structures, and policy differences may play a larger role in shifting unemployment trends than AI adoption alone.\
 
 **Limitations**
 The relationship between AI adoption rate and unemployment is associational, not causal: the post-ChatGPT window is short, AI adoption measures enterprise use rather than job displacement, and confounders (the COVID recovery, differing economies) might play a larger role in explaining the variation. Therefore, we cannot conclude that the implementation of AI causes a worse-off unemployment trend for youths. 

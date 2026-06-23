@@ -400,7 +400,7 @@ The relationship between AI adoption rate and unemployment is associational, not
 
 ## 5.1 Github repository link
 
-Provide the link to your PUBLIC repository here: ...
+Public repository: https://github.com/monisharaghoebar-debug/ProgrammingForEcon.git 
 
 ## 5.2 Reference list
 
